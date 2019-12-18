@@ -74,6 +74,9 @@ if [[ $selected = /* ]] {
     local new_url=${dlpage:h}/$selected
 }
 
-return 9
+# Assign outer-scope parameters
+url=$new_url
+
+return 0
 
 # vim:ft=zsh:tw=80:sw=4:sts=4:et

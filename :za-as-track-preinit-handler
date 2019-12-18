@@ -22,7 +22,13 @@ if [[ -d $__dir && -z ${opts[(r)-u]} ]] {
 (( ${+functions[-zplg-setup-plugin-dir]} )) || builtin source ${ZPLGM[BIN_DIR]}/zplugin-install.zsh
 
 if [[ -z ${ZPLG_ICE[dlpage]} ]] {
-    local dlpage=${__url:h}/${__url##*++}
+    local plus=${(MS)__url%%[^+]++##} dlpage=${__url}
+    plus=${plus#?+}
+    while [[ -n $plus ]] {
+        dlpage=${dlpage:h}
+        plus=${plus%+}
+    }
+    local dlpage=${dlpage}/${__url##*++}
 } else {
     local dlpage=${ZPLG_ICE[dlpage]}
 }

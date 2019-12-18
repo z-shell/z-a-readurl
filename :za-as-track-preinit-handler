@@ -81,13 +81,34 @@ pattern_url=${pattern_url//\%VERSION\%/[.,a-zA-Z0-9_-]\\+}
 local -a list
 list=( ${(@f)"$(command grep -io "href=.$pattern_url" $tmpfile)"} )
 
-local selected=${list[1]}
+local selected=${list[1]#href=?}
 
 if [[ -z $selected ]] {
     print -P -- "%F{38}as-track annex: %F{160}Warning: couldn't match the URL at the download page%f"
     print -P -- "%F{160}(which is %F{221}${__url//\%/%%}%F{160}"\
 "${${${__id_as:#$__url}:+\\nthe snippet is being identified as %F\{141\}$__id_as%F\{160\}\)}:-\)}"
     return 9
+}
+
+if [[ $selected = /* ]] {
+    local domain
+    if [[ $dlpage = (#b)(#i)((http(s|)|ftp(s|)|ssh|scp)://[^/]##)(*) ]] {
+        domain=${match[1]}
+    } else {
+        if [[ -z ${match[2]} ]] {
+            print -P -- "%F{38}as-track annex: %F{160}ERROR: the URL cannot be only a domain name%f"
+            return 9
+        } else {
+            print -P -- "%F{38}as-track annex: %F{160}ERROR: couldn't establish the domain name" \
+                "(unsupported protocol? supported are: http(s),ftp(s),ssh,scp)%f"
+            return 9
+        }
+    }
+    local new_url=$domain$selected
+} elif [[ $selected = (#i)(http(s|)|ftp(s|)|ssh|scp)://* ]] {
+    local new_url=$selected
+} else {
+    local new_url=${dlpage:h}/$selected
 }
 
 return 9

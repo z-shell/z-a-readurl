@@ -79,7 +79,7 @@ local pattern_url=${__url%++*}
 pattern_url=${pattern_url//\%VERSION\%/[.,a-zA-Z0-9_-]\\+}
 
 local -a list
-list=( ${(@f)"$(command grep -o "href=.$pattern_url" $tmpfile)"} )
+list=( ${(@f)"$(command grep -io "href=.$pattern_url" $tmpfile)"} )
 
 local selected=${list[1]}
 

@@ -32,7 +32,7 @@ local tmpfile="$(mktemp)"
 -zplg-download-file-stdout $dlpage 1 >! $tmpfile || {
     -zplg-download-file-stdout $dlpage >! $tmpfile || {
         print -P "%F{38}as-track annex: %F{160}ERROR: couldn't" \
-            "fetch the download page (%F{221}$dlpage%F{160})%f"
+            "fetch the download page (%F{221}${dlpage//\%/%%}%F{160})%f"
         return 0
     }
 }

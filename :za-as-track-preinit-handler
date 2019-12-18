@@ -9,7 +9,7 @@ setopt extendedglob warncreateglobal typesetsilent noshortloops rcquotes
 
 [[ ${ZPLG_ICE[as]} != track* ]] && return 0
 [[ $1 = __plugin ]] && {
-    print -P -- "%F{160}ERROR: as'${ZPLG_ICE[as]}' ice can be used only with snippets%f"
+    print -P -- "%F{38}as-track annex: %F{160}ERROR: as'${ZPLG_ICE[as]}' ice can be used only with snippets%f"
     return 0
 }
 
@@ -68,7 +68,7 @@ local tmpfile="$(mktemp)"
 
 .as-track-download-file-stdout $dlpage 1 >! $tmpfile || {
     .as-track-download-file-stdout $dlpage >! $tmpfile || {
-        print -P "%F{160}ERROR: as'track' handling code couldn't" \
+        print -P "%F{38}as-track annex: %F{160}ERROR: couldn't" \
             "fetch the download page (%F{221}$dlpage%F{160})%f"
         return 0
     }
@@ -84,7 +84,7 @@ list=( ${(@f)"$(command grep -o "href=.$pattern_url" $tmpfile)"} )
 local selected=${list[1]}
 
 if [[ -z $selected ]] {
-    print -P -- "%F{160}Warning: as-track annex couldn't match the URL at the download page%f"
+    print -P -- "%F{38}as-track annex: %F{160}Warning: couldn't match the URL at the download page%f"
     print -P -- "%F{160}(which is %F{221}${__url//\%/%%}%F{160}"\
 "${${${__id_as:#$__url}:+\\nthe snippet is being identified as %F\{141\}$__id_as%F\{160\}\)}:-\)}"
 }

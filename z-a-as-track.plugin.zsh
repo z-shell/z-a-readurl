@@ -16,7 +16,7 @@ autoload -Uz :za-as-track-preinit-handler
     hook:preinit \
     :za-as-track-preinit-handler \
     :za-as-track-help-null-handler \
-    "dlpage''" # The ice conflict with dl'' from z-a-patch-dl is being handled
-               # in the other annex
+    "dlpage''|_track''" # The ice conflict with dl'' from z-a-patch-dl is being handled
+                        # in the other annex
 
 # vim:ft=zsh:tw=80:sw=4:sts=4:et

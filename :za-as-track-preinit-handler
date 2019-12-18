@@ -8,7 +8,7 @@ emulate -LR zsh
 setopt extendedglob warncreateglobal typesetsilent noshortloops rcquotes
 
 [[ ${ZPLG_ICE[as]} != track* ]] && return 0
-[[ $1 = __plugin ]] && {
+[[ $1 = plugin ]] && {
     print -P -- "%F{38}as-track annex: %F{160}ERROR: as'${ZPLG_ICE[as]}' ice can be used only with snippets%f"
     return 0
 }

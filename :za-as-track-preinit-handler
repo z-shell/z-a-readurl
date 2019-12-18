@@ -15,8 +15,10 @@ setopt extendedglob warncreateglobal typesetsilent noshortloops rcquotes
 
 local __type="$1" __url="$2" __id_as="$3" __dir="$4" __hook="$5"
 
+if [[ -d $__dir && -z ${opts[(r)-u]} ]] {
     return 0
-} # }}}
+}
+
 (( ${+functions[-zplg-setup-plugin-dir]} )) || builtin source ${ZPLGM[BIN_DIR]}/zplugin-install.zsh
 
 if [[ -z ${ZPLG_ICE[dlpage]} ]] {

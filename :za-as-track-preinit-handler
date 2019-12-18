@@ -87,6 +87,7 @@ if [[ -z $selected ]] {
     print -P -- "%F{38}as-track annex: %F{160}Warning: couldn't match the URL at the download page%f"
     print -P -- "%F{160}(which is %F{221}${__url//\%/%%}%F{160}"\
 "${${${__id_as:#$__url}:+\\nthe snippet is being identified as %F\{141\}$__id_as%F\{160\}\)}:-\)}"
+    return 9
 }
 
 return 9

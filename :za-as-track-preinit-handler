@@ -43,7 +43,9 @@ local tmpfile="$(mktemp)"
     }
 }
 
-local pattern_url=${__url%++*}
+match=()
+local pattern_url=${__url%(#b)([^+])++*}
+pattern_url=$pattern_url${match[1]}
 
 pattern_url=${pattern_url//\%VERSION\%/[.,a-zA-Z0-9_-]\\+}
 

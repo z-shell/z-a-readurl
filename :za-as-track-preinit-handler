@@ -1,0 +1,94 @@
+#!/usr/bin/env zsh
+# -*- mode: sh; sh-indentation: 4; indent-tabs-mode: nil; sh-basic-offset: 4; -*-
+
+# Copyright (c) 2019 Sebastian Gniazdowski
+
+# Set the base and typically useful options
+emulate -LR zsh
+setopt extendedglob warncreateglobal typesetsilent noshortloops rcquotes
+
+[[ ${ZPLG_ICE[as]} != track* ]] && return 0
+[[ $1 = __plugin ]] && {
+    print -P -- "%F{160}ERROR: as'${ZPLG_ICE[as]}' ice can be used only with snippets%f"
+    return 0
+}
+
+local __type="$1" __url="$2" __id_as="$3" __dir="$4" __hook="$5"
+local nl=$'\n'
+
+# FUNCTION: .as-track-download-file-stdout {{{
+# Downloads file to stdout. Supports following backend commands:
+# curl, wget, lftp, lynx. Used by snippet loading.
+.as-track-download-file-stdout() {
+    local url="$1" restart="$2"
+
+    setopt localoptions localtraps
+
+    if (( restart )); then
+        (( ${path[(I)/usr/local/bin]} )) || \
+            {
+                path+=( "/usr/local/bin" );
+                trap "path[-1]=()" EXIT
+            }
+
+        if (( ${+commands[curl]} )) then
+            command curl -fsSL "$url" || return 1
+        elif (( ${+commands[wget]} )); then
+            command wget -q "$url" -O - || return 1
+        elif (( ${+commands[lftp]} )); then
+            command lftp -c "cat $url" || return 1
+        elif (( ${+commands[lynx]} )) then
+            command lynx -source "$url" || return 1
+        else
+            return 2
+        fi
+    else
+        if type curl 2>/dev/null 1>&2; then
+            command curl -fsSL "$url" || return 1
+        elif type wget 2>/dev/null 1>&2; then
+            command wget -q "$url" -O - || return 1
+        elif type lftp 2>/dev/null 1>&2; then
+            command lftp -c "cat $url" || return 1
+        else
+            .as-track-download-file-stdout "$url" "1"
+            return $?
+        fi
+    fi
+
+    return 0
+} # }}}
+
+if [[ -z ${ZPLG_ICE[dlpage]} ]] {
+    local dlpage=${__url:h}/${__url##*++}
+} else {
+    local dlpage=${ZPLG_ICE[dlpage]}
+}
+
+local tmpfile="$(mktemp)"
+
+.as-track-download-file-stdout $dlpage 1 >! $tmpfile || {
+    .as-track-download-file-stdout $dlpage >! $tmpfile || {
+        print -P "%F{160}ERROR: as'track' handling code couldn't" \
+            "fetch the download page (%F{221}$dlpage%F{160})%f"
+        return 0
+    }
+}
+
+local pattern_url=${__url%++*}
+
+pattern_url=${pattern_url//\%VERSION\%/[.,a-zA-Z0-9_-]\\+}
+
+local -a list
+list=( ${(@f)"$(command grep -o "href=.$pattern_url" $tmpfile)"} )
+
+local selected=${list[1]}
+
+if [[ -z $selected ]] {
+    print -P -- "%F{160}Warning: as-track annex couldn't match the URL at the download page%f"
+    print -P -- "%F{160}(which is %F{221}${__url//\%/%%}%F{160}"\
+"${${${__id_as:#$__url}:+\\nthe snippet is being identified as %F\{141\}$__id_as%F\{160\}\)}:-\)}"
+}
+
+return 9
+
+# vim:ft=zsh:tw=80:sw=4:sts=4:et

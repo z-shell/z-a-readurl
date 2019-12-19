@@ -7,7 +7,7 @@
 emulate -LR zsh
 setopt extendedglob warncreateglobal typesetsilent noshortloops rcquotes
 
-[[ ${ZPLG_ICE[as]} != track* && ${ZPLG_ICE[_track]} != track* ]] && return 0
+[[ ${ZPLG_ICE[as]} != track* && ${ZPLG_ICE[.track]} != track* ]] && return 0
 [[ $1 = plugin ]] && {
     print -P -- "%F{38}as-track annex: %F{160}ERROR: as'${ZPLG_ICE[as]}' ice can be used only with snippets%f"
     return 0
@@ -15,7 +15,7 @@ setopt extendedglob warncreateglobal typesetsilent noshortloops rcquotes
 
 local __type="$1" __url="$2" __id_as="$3" __dir="$4" __hook="$5"
 
-ZPLG_ICE[_track]=${ZPLG_ICE[as]}
+ZPLG_ICE[.track]=${ZPLG_ICE[as]}
 
 if [[ ${ZPLG_ICE[as]} = track\|(command|program) ]] {
     ZPLG_ICE[as]=command

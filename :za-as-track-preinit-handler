@@ -31,8 +31,11 @@ if [[ -d $__dir && -z ${opts[(r)-u]} ]] {
     return 0
 }
 
-(( ${+functions[-zplg-setup-plugin-dir]} )) || builtin source ${ZPLGM[BIN_DIR]}/zplugin-install.zsh
+local -a match mbegin mend reply
+local MATCH REPLY
+integer MBEGIN MEND
 
+(( ${+functions[-zplg-setup-plugin-dir]} )) || builtin source ${ZPLGM[BIN_DIR]}/zplugin-install.zsh
 
 match=()
 local dlpage=${__url%(#b)([^+])++*}

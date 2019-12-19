@@ -10,12 +10,15 @@ It works as follows:
 - invoke `snippet` (or simply pass the URL using the `for` syntax) on the URL of
   the page that hosts the URL to the file to download,
 - provide `dlink''` ice with the expected file-download URL replacing the version
-  with the `%VERSION%` keyword.
+  with the `%VERSION%` keyword,
+- also provide `as''` ice with one of the following values: `track`,
+  `track|command`, `track|completion`, `track|null`; the part after the `|` has
+  the same meaning as in the normal `as''` ice.
 
 So, for example:
 
 ```zsh
-zplugin id-as'fzf' atclone'zpextract fzf tgz' as'track|command' \
+zplugin id-as'fzf' as'track|command' atclone'zpextract fzf tgz' \
     dlink'/junegunn/fzf-bin/releases/download/%VERSION%/fzf-%VERSION%-linux_amd64.tgz' \
         for https://github.com/junegunn/fzf-bin/releases/
 ```

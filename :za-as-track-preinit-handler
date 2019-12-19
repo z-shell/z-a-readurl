@@ -33,16 +33,21 @@ if [[ -d $__dir && -z ${opts[(r)-u]} ]] {
 
 (( ${+functions[-zplg-setup-plugin-dir]} )) || builtin source ${ZPLGM[BIN_DIR]}/zplugin-install.zsh
 
-if [[ -z ${ZPLG_ICE[dlpage]} ]] {
-    local plus=${(MS)__url%%[^+]++##} dlpage=${__url}
+
+match=()
+local dlpage=${__url%(#b)([^+])++*}
+dlpage=$dlpage${match[1]}
+
+if [[ -z ${ZPLG_ICE[dlink]} ]] {
+    local plus=${(MS)__url%%[^+]++##} pattern_url=$dlpage
     plus=${plus#?+}
     while [[ -n $plus ]] {
-        dlpage=${dlpage:h}
+        pattern_url=${pattern_url:h}
         plus=${plus%+}
     }
-    local dlpage=${dlpage}/${__url##*++}
+    local pattern_url=${pattern_url}/${__url##*++}
 } else {
-    local dlpage=${ZPLG_ICE[dlpage]}
+    local pattern_url=${ZPLG_ICE[dlink]}
 }
 
 local tmpfile="$(mktemp)"
@@ -55,10 +60,6 @@ local tmpfile="$(mktemp)"
     }
 }
 
-match=()
-local pattern_url=${__url%(#b)([^+])++*}
-pattern_url=$pattern_url${match[1]}
-
 pattern_url=${pattern_url//\%VERSION\%/[.,a-zA-Z0-9_-]\\+}
 
 local -a list
@@ -68,7 +69,7 @@ local selected=${list[1]#href=?}
 
 if [[ -z $selected ]] {
     print -P -- "%F{38}as-track annex: %F{160}Warning: couldn't match the URL at the download page%f"
-    print -P -- "%F{160}(which is %F{221}${__url//\%/%%}%F{160}"\
+    print -P -- "%F{160}(which is %F{221}${dlpage//\%/%%}%F{160}"\
 "${${${__id_as:#$__url}:+\\nthe snippet is being identified as %F\{141\}$__id_as%F\{160\}\)}:-\)}"
     return 9
 }
@@ -91,7 +92,17 @@ if [[ $selected = /* ]] {
 } elif [[ $selected = (#i)(http(s|)|ftp(s|)|ssh|scp)://* ]] {
     local new_url=$selected
 } else {
-    local new_url=${dlpage:h}/$selected
+    local -a exts
+    exts=(
+        xhtml htmls html htm php php3 php4 phtml
+        pl asp aspx ece js jsp jspx jhtml cfm py
+        rb rhtml shtml cgi
+    )
+    if [[ $dlpage = *.(${(~j:|:)exts}) ]] {
+        local new_url=${dlpage:h}/$selected
+    } else {
+        local new_url=$dlpage/$selected
+    }
 }
 
 # Assign outer-scope parameters

@@ -71,9 +71,9 @@ list=( ${(@f)"$(command grep -io "href=.$pattern_url" $tmpfile)"} )
 local selected=${list[1]#href=?}
 
 if [[ -z $selected ]] {
-    print -P -- "${ZPLGM[col-pre]}as-track annex: %F{160}Warning: couldn't match the URL at the download page%f"
-    print -P -- "%F{160}(which is ${ZPLGM[col-obj]}${dlpage//\%/%%}%F{160}"\
-"${${${__id_as:#$__url}:+\\nthe snippet is being identified as ${ZPLGM[col-obj2]}$__id_as%F\{160\}\)}:-\)}"
+    print -P -- "${ZPLGM[col-pre]}as-track annex: %F{160}ERROR:%f couldn't match the URL at the download page" \
+        "(which is ${ZPLGM[col-obj]}${dlpage//\%/%%}%f"\
+"${${__id_as:#$__url}:+\; the snippet is being identified as ${ZPLGM[col-obj2]}$__id_as%f})"
     return 9
 }
 

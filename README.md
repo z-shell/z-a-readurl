@@ -7,8 +7,8 @@ a file to which URL is hosted on a webpage.
 
 It works as follows:
 
-- invoke `snippet` (or simply pass the URL using the `for` syntax) on the URL of
-  the page that hosts the URL to the file to download,
+- invoke `snippet` (or simply pass the `http://…` address using the `for`
+  syntax) on the web-page that hosts the URL to the file to download,
 - provide `dlink''` ice with the expected file-download URL replacing the version
   with the `%VERSION%` keyword,
 - also provide `as''` ice with one of the following values: `track`,

@@ -9,7 +9,8 @@ setopt extendedglob warncreateglobal typesetsilent noshortloops rcquotes
 
 [[ ${ZPLG_ICE[as]} != track* && ${ZPLG_ICE[.track]} != track* ]] && return 0
 [[ $1 = plugin ]] && {
-    print -P -- "${ZPLGM[col-pre]}as-track annex: %F{160}ERROR: as'${ZPLG_ICE[as]}' ice can be used only with snippets%f"
+    print -P -- "${ZPLGM[col-pre]}as-track annex: ${ZPLGM[col-error]}ERROR: as'${ZPLG_ICE[as]}'" \
+        "ice can be used only with snippets%f"
     return 0
 }
 

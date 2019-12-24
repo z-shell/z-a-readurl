@@ -30,8 +30,8 @@ It works as follows:
 So, for example:
 
 ```zsh
-zplugin id-as'fzf' as'track|command' atclone'zpextract fzf tgz' \
-    dlink'/junegunn/fzf-bin/releases/download/%VERSION%/fzf-%VERSION%-linux_amd64.tgz' \
+zplugin id-as=fzf as='track|command' atclone='zpextract fzf tgz' \
+    dlink='/junegunn/fzf-bin/releases/download/%VERSION%/fzf-%VERSION%-linux_amd64.tgz' \
         for https://github.com/junegunn/fzf-bin/releases/
 ```
 
@@ -50,8 +50,8 @@ use the `dlink0''` ice to provide the pattern for the final download page. For
 example, in case of `terraform`, the Zplugin command is:
 
 ```zsh
-zplugin id-as'terraform' atclone'zpextract terraform zip' as'track|command' \
-    atpull'%atclone' dlink0'/terraform/%VERSION%/' \
+zplugin id-as=terraform atclone='zpextract terraform zip' as='track|command' \
+    atpull='%atclone' dlink0='/terraform/%VERSION%/' \
     dlink='/terraform/%VERSION%/terraform_%VERSION%_linux_386.zip' for \
         http://releases.hashicorp.com/terraform/
 ```

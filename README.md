@@ -30,7 +30,7 @@ It works as follows:
 So, for example:
 
 ```zsh
-zplugin id-as=fzf as='track|command' atclone='zpextract fzf tgz' \
+zplugin id-as=fzf as='track|command' atclone='zpextract fzf tgz' atpull='%atclone' \
     dlink='/junegunn/fzf-bin/releases/download/%VERSION%/fzf-%VERSION%-linux_amd64.tgz' \
         for https://github.com/junegunn/fzf-bin/releases/
 ```

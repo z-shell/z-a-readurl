@@ -24,6 +24,7 @@ if [[ ${ZPLG_ICE[as]} = track\|(command|program) ]] {
     ZPLG_ICE[as]=completion
 } elif [[ ${ZPLG_ICE[as]} = track\|null ]] {
     ZPLG_ICE[as]=null
+    ZPLG_ICE[pick]=${ZPLG_ICE[pick]:-/dev/null}
 } else {
     unset 'ZPLG_ICE[as]'
 }

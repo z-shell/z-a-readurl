@@ -51,62 +51,87 @@ if [[ -z ${ZPLG_ICE[dlink]} ]] {
     }
     local pattern_url=${pattern_url}/${__url##*++}
 } else {
-    local pattern_url=${ZPLG_ICE[dlink]}
+    local -a urls
+    urls=( ${(s.;.)ZPLG_ICE[dlink]} )
+    if (( ${#urls} == 2 )) {
+        local pattern_url=${urls[@]:#0*} pattern_url0=${${(M)urls[@]:#0*}##0(:|=)(#c0,1)}
+    } elif (( ${#urls} > 2 )) {
+        print -P -- "${ZPLGM[col-pre]}as-track annex: ${ZPLGM[col-error]}ERROR:" \
+            "${ZPLGM[col-msg2]}The ice ${ZPLGM[col-obj2]}dlink''${ZPLGM[col-msg2]}" \
+            "has been used too many times (i.e.:" \
+            "${ZPLGM[col-obj]}${#urls}${ZPLGM[col-msg2]}, while it can be used at most" \
+            "two times, as ${ZPLGM[col-obj]}dlink0''${ZPLGM[col-msg2]}" \
+            "and then ${ZPLGM[col-obj]}dlink''${ZPLGM[col-msg2]}), aborting.%f"
+        return 9
+    } else {
+        local pattern_url=${ZPLG_ICE[dlink]}
+    }
 }
 
 local tmpfile="$(mktemp)"
 
--zplg-download-file-stdout $dlpage 1 >! $tmpfile || {
-    -zplg-download-file-stdout $dlpage >! $tmpfile || {
-        print -P "${ZPLGM[col-pre]}as-track annex: %F{160}ERROR: couldn't" \
-            "fetch the download page (${ZPLGM[col-obj]}${dlpage//\%/%%}%F{160})%f"
-        return 0
-    }
-}
-
 pattern_url=${pattern_url//\%VERSION\%/[.,a-zA-Z0-9_-]\\+}
+local pattern_url0=${pattern_url0//\%VERSION\%/[.,a-zA-Z0-9_-]\\+}
 
-local -a list
-list=( ${(@f)"$(command grep -io "href=.$pattern_url" $tmpfile)"} )
-
-local selected=${list[1]#href=?}
-
-if [[ -z $selected ]] {
-    print -P -- "${ZPLGM[col-pre]}as-track annex: %F{160}ERROR:%f couldn't match the URL at the download page" \
-        "(which is ${ZPLGM[col-obj]}${dlpage//\%/%%}%f"\
-"${${__id_as:#$__url}:+\; the snippet is being identified as ${ZPLGM[col-obj2]}$__id_as%f})"
-    return 9
-}
-
-if [[ $selected = /* ]] {
-    local domain
-    if [[ $dlpage = (#b)(#i)((http(s|)|ftp(s|)|ssh|scp)://[^/]##)(*) ]] {
-        domain=${match[1]}
-    } else {
-        if [[ -z ${match[2]} ]] {
-            print -P -- "${ZPLGM[col-pre]}as-track annex: %F{160}ERROR: the URL cannot be only a domain name%f"
-            return 9
-        } else {
-            print -P -- "${ZPLGM[col-pre]}as-track annex: %F{160}ERROR: couldn't establish the domain name" \
-                "(unsupported protocol? supported are: http(s),ftp(s),ssh,scp)%f"
-            return 9
+local cur_paturl
+for cur_paturl ( $pattern_url0 $pattern_url ) {
+    -zplg-download-file-stdout $dlpage 1 >! $tmpfile || {
+        -zplg-download-file-stdout $dlpage >! $tmpfile || {
+            print -P "${ZPLGM[col-pre]}as-track annex: ${ZPLGM[col-error]}ERROR: couldn't" \
+                "fetch the download page (${ZPLGM[col-obj]}${dlpage//\%/%%}${ZPLGM[col-error]})%f"
+            return 0
         }
     }
-    local new_url=$domain$selected
-} elif [[ $selected = (#i)(http(s|)|ftp(s|)|ssh|scp)://* ]] {
-    local new_url=$selected
-} else {
-    local -a exts
-    exts=(
-        xhtml htmls html htm php php3 php4 phtml
-        pl asp aspx ece js jsp jspx jhtml cfm py
-        rb rhtml shtml cgi
-    )
-    if [[ $dlpage = *.(${(~j:|:)exts}) ]] {
-        local new_url=${dlpage:h}/$selected
-    } else {
-        local new_url=$dlpage/$selected
+
+    local -a list
+    list=( ${(@f)"$(command grep -io "href=.$cur_paturl" $tmpfile)"} )
+
+    local selected=${list[1]#href=?}
+
+    if [[ -z $selected ]] {
+        print -P -- "${ZPLGM[col-pre]}as-track annex: ${ZPLGM[col-error]}ERROR:%f" \
+            "couldn't match the URL${${(M)cur_paturl:#$pattern_url0}:+-0} at the download page" \
+            "(which is ${ZPLGM[col-obj]}${dlpage//\%/%%}%f"\
+"${${__id_as:#$__url}:+\; the snippet is being identified as ${ZPLGM[col-obj2]}$__id_as%f})"
+        return 9
     }
+
+    if [[ $selected = /* ]] {
+        local domain
+        if [[ $dlpage = (#b)(#i)((http(s|)|ftp(s|)|ssh|scp)://[^/]##)(*) ]] {
+            domain=${match[1]}
+        } else {
+            if [[ -z ${match[2]} ]] {
+                print -P -- "${ZPLGM[col-pre]}as-track annex: ${ZPLGM[col-error]}ERROR:" \
+                    "the URL cannot be only a domain name%f"
+                return 9
+            } else {
+                print -P -- "${ZPLGM[col-pre]}as-track annex: ${ZPLGM[col-error]}ERROR:" \
+                    "couldn't establish the domain name" \
+                    "(unsupported protocol? supported are: http(s),ftp(s),ssh,scp)%f"
+                return 9
+            }
+        }
+        local new_url=$domain$selected
+    } elif [[ $selected = (#i)(http(s|)|ftp(s|)|ssh|scp)://* ]] {
+        local new_url=$selected
+    } else {
+        local -a exts
+        exts=(
+            xhtml htmls html htm php php3 php4 phtml
+            pl asp aspx ece js jsp jspx jhtml cfm py
+            rb rhtml shtml cgi
+        )
+        if [[ $dlpage = *.(${(~j:|:)exts}) ]] {
+            local new_url=${dlpage:h}/$selected
+        } else {
+            local new_url=$dlpage/$selected
+        }
+    }
+
+    # Assign in case there's dlink0 given (i.e.: that this
+    # URL was the dlink0 URL)
+    dlpage=$new_url
 }
 
 # Assign outer-scope parameters

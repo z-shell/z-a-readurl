@@ -82,10 +82,9 @@ zplugin atclone'zpextract *.zip' as'track|command' atpull'%atclone' for \
 
 The annex provides:
 
-1. Two new ices: `dlink''` and `dlink0''`.
-
-2. A handling of the special values of the `as''` ice, i.e.: of `as'track'`,
-  `as'track|command'`, etc.
+1.  Two new ices: `dlink''` and `dlink0''`.
+2.  A handling of the special values of the `as''` ice, i.e.: of `as'track'`,
+    `as'track|command'`, etc.
 
 The annex works only with snippets, not plugins.
 

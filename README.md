@@ -29,6 +29,42 @@ The snippet is just an example. The same effect is obtained by loading as
 As it can be seen, the `dlink''` can be a relative or an absolute path and also
 a full URL (i.e.: beginning with the `http://…` prefix).
 
+## Intermediate Download Page
+
+Sometimes, like it is in case of
+[terraform](http://releases.hashicorp.com/terraform) command, the final download
+link isn't at the download page, but on a page that's listed on it. In such case
+use the `dlink0''` ice to provide the pattern for the final download page. For
+example, in case of `terraform`, the Zplugin command is:
+
+```zsh
+zplugin id-as'terraform' atclone'zpextract terraform zip' as'track|command' \
+    atpull'%atclone' dlink0'/terraform/%VERSION%/' \
+    dlink='/terraform/%VERSION%/terraform_%VERSION%_linux_386.zip' for \
+        http://releases.hashicorp.com/terraform/
+```
+
+## Skipping `dlink''` Ice
+
+Sometimes the URL of the download page differs from the URL of the archive in
+just a few `/`-sections. In such case, it is possible to skip the `dlink''` ice
+by appending a `++`-separated fragment of the archive URL, like so:
+
+```zsh
+zplugin atclone'zpextract *.zip' as'track|command' atpull'%atclone' for \
+        http://domain.com/download-page++/archive.zip
+```
+
+If the archive URL has some different `/`-fragments, then it's possible to strip
+the conflicting ones from the download URL by using `+++`, `++++`, etc. – the
+number of the `/`-fragments that'll be stripped equals to the number of the `+`
+minus 2. So, for example:
+
+```zsh
+zplugin atclone'zpextract *.zip' as'track|command' atpull'%atclone' for \
+        http://domain.com/download-page/conflicting-fragment+++/archive.zip
+```
+
 ## Installation
 
 Simply load like a regular plugin, i.e.:

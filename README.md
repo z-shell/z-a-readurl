@@ -78,6 +78,17 @@ zplugin atclone'zpextract *.zip' as'track|command' atpull'%atclone' for \
     http://domain.com/download-page/removed-section+++/archive.zip
 ```
 
+## Summary
+
+The annex provides:
+
+1. Two new ices: `dlink''` and `dlink0''`.
+
+2. A handling of the special values of the `as''` ice, i.e.: of `as'track'`,
+  `as'track|command'`, etc.
+
+The annex works only with snippets, not plugins.
+
 ## Installation
 
 Simply load like a regular plugin, i.e.:
@@ -85,5 +96,9 @@ Simply load like a regular plugin, i.e.:
 ```zsh
 zplugin light zplugin/z-a-as-track
 ```
+
+After executing the above command (possibly via `zshrc`) it's then possible to
+use the `dlink''` and `dlink0''` ices and also the special `as'track…'` value of
+the `as''` ice.
 
 <!-- vim:set ft=markdown tw=80 fo+=a1n autoindent:  -->

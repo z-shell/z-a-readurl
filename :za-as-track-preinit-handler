@@ -18,11 +18,11 @@ local __type="$1" __url="$2" __id_as="$3" __dir="$4" __hook="$5"
 
 ZPLG_ICE[.track]=${ZPLG_ICE[.track]:-${ZPLG_ICE[as]}}
 
-if [[ ${ZPLG_ICE[as]} = track\|(command|program) ]] {
+if [[ ${ZPLG_ICE[as]} = (track\||)(command|program) ]] {
     ZPLG_ICE[as]=command
-} elif [[ ${ZPLG_ICE[as]} = track\|completion ]] {
+} elif [[ ${ZPLG_ICE[as]} = (track\||)completion ]] {
     ZPLG_ICE[as]=completion
-} elif [[ ${ZPLG_ICE[as]} = track\|null ]] {
+} elif [[ ${ZPLG_ICE[as]} = (track\||)null ]] {
     ZPLG_ICE[as]=null
     ZPLG_ICE[pick]=${ZPLG_ICE[pick]:-/dev/null}
 } else {

@@ -4,11 +4,11 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [z-a-as-track](#z-a-as-track)
-  - [Introduction](#introduction)
-  - [Intermediate Download Page](#intermediate-download-page)
-  - [Skipping `dlink''` Ice](#skipping-dlink-ice)
-  - [Installation](#installation)
+- [Introduction](#introduction)
+- [Intermediate Download Page](#intermediate-download-page)
+- [Skipping `dlink''` Ice](#skipping-dlink-ice)
+- [Summary](#summary)
+- [Installation](#installation)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

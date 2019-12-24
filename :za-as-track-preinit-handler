@@ -45,7 +45,7 @@ dlpage=$dlpage${match[1]}
 
 if [[ -z ${ZPLG_ICE[dlink]} ]] {
     local plus=${(MS)__url%%[^+]++##} pattern_url=$dlpage
-    plus=${plus#?+}
+    plus=${plus#?++}
     while [[ -n $plus ]] {
         pattern_url=${pattern_url:h}
         plus=${plus%+}

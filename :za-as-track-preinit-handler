@@ -97,22 +97,17 @@ for cur_paturl ( $pattern_url0 $pattern_url ) {
     }
 
     if [[ $selected = /* ]] {
-        local domain
-        if [[ $dlpage = (#b)(#i)((http(s|)|ftp(s|)|ssh|scp)://[^/]##)(*) ]] {
-            domain=${match[1]}
-        } else {
-            if [[ -z ${match[2]} ]] {
-                print -P -- "${ZPLGM[col-pre]}as-track annex: ${ZPLGM[col-error]}ERROR:" \
-                    "the URL cannot be only a domain name%f"
-                return 9
-            } else {
-                print -P -- "${ZPLGM[col-pre]}as-track annex: ${ZPLGM[col-error]}ERROR:" \
-                    "couldn't establish the domain name" \
-                    "(unsupported protocol? supported are: http(s),ftp(s),ssh,scp)%f"
-                return 9
-            }
+        local domain protocol
+        if [[ $dlpage = (#b)(#i)((http(s|)|ftp(s|)|ssh|scp)://|)([^/]##)(*) ]] {
+            protocol=${match[1]} domain=${match[5]}
         }
-        local new_url=$domain$selected
+        if [[ -z $domain ]] {
+            print -P -- "${ZPLGM[col-pre]}as-track annex: ${ZPLGM[col-error]}ERROR:" \
+                "couldn't establish the domain name" \
+                "(unsupported protocol? supported are: http(s),ftp(s),ssh,scp).%f"
+            return 9
+        }
+        local new_url=${protocol:-http://}$domain$selected
     } elif [[ $selected = (#i)(http(s|)|ftp(s|)|ssh|scp)://* ]] {
         local new_url=$selected
     } else {

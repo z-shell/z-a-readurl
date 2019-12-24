@@ -55,14 +55,15 @@ zplugin atclone'zpextract *.zip' as'track|command' atpull'%atclone' for \
         http://domain.com/download-page++/archive.zip
 ```
 
-If the archive URL has some different `/`-fragments, then it's possible to strip
+If the archive URL has some different `/`-sections, then it's possible to strip
 the conflicting ones from the download URL by using `+++`, `++++`, etc. – the
-number of the `/`-fragments that'll be stripped equals to the number of the `+`
-minus 2. So, for example:
+number of the `/`-section that'll be stripped equals to the number of the `+`
+minus
+2. So, for example:
 
 ```zsh
 zplugin atclone'zpextract *.zip' as'track|command' atpull'%atclone' for \
-        http://domain.com/download-page/conflicting-fragment+++/archive.zip
+    http://domain.com/download-page/removed-section+++/archive.zip
 ```
 
 ## Installation

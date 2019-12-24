@@ -133,6 +133,13 @@ for cur_paturl ( $pattern_url0 $pattern_url ) {
 # Assign outer-scope parameters
 url=$new_url
 
+if [[ -n ${opts[(r)-u]} && -z ${opts[(r)-f]} ]] {
+    { local old_url="$(<$__dir/._zplugin/url_rsvd)"; } 2>/dev/null
+    [[ $old_url == $new_url ]] && { print "Already up to date."; return 9; }
+}
+
+ZPLG_ICE[url_rsvd]=$new_url
+
 return 0
 
 # vim:ft=zsh:tw=80:sw=4:sts=4:et

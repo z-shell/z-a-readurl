@@ -130,14 +130,14 @@ for cur_paturl ( $pattern_url0 $pattern_url ) {
     dlpage=$new_url
 }
 
-# Assign outer-scope parameters
-url=$new_url
-
+# Handle the update
 if [[ -n ${opts[(r)-u]} && -z ${opts[(r)-f]} ]] {
     { local old_url="$(<$__dir/._zplugin/url_rsvd)"; } 2>/dev/null
     [[ $old_url == $new_url ]] && { print "Already up to date."; return 9; }
 }
 
+# Assign outer-scope parameters
+url=$new_url
 ZPLG_ICE[url_rsvd]=$new_url
 
 print -P -- "${ZPLGM[col-pre]}as-track annex: ${ZPLGM[col-msg]}Matched the" \

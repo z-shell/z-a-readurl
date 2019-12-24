@@ -79,7 +79,7 @@ for cur_paturl ( $pattern_url0 $pattern_url ) {
         -zplg-download-file-stdout $dlpage >! $tmpfile || {
             print -P "${ZPLGM[col-pre]}as-track annex: ${ZPLGM[col-error]}ERROR: couldn't" \
                 "fetch the download page (${ZPLGM[col-obj]}${dlpage//\%/%%}${ZPLGM[col-error]})%f"
-            return 0
+            return 9
         }
     }
 

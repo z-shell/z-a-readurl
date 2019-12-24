@@ -16,7 +16,7 @@ setopt extendedglob warncreateglobal typesetsilent noshortloops rcquotes
 
 local __type="$1" __url="$2" __id_as="$3" __dir="$4" __hook="$5"
 
-ZPLG_ICE[.track]=${ZPLG_ICE[as]}
+ZPLG_ICE[.track]=${ZPLG_ICE[.track]:-${ZPLG_ICE[as]}}
 
 if [[ ${ZPLG_ICE[as]} = track\|(command|program) ]] {
     ZPLG_ICE[as]=command

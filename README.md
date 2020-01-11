@@ -1,4 +1,4 @@
-# z-a-as-track
+# z-a-as-monitor
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -23,14 +23,14 @@ It works as follows:
   syntax) on the web-page that hosts the URL to the file to download,
 - provide `dlink''` ice with the expected file-download URL replacing the version
   with the `%VERSION%` keyword,
-- also provide `as''` ice with one of the following values: `track`,
-  `track|command`, `track|completion`, `track|null`; the part after the `|` has
+- also provide `as''` ice with one of the following values: `monitor`,
+  `monitor|command`, `monitor|completion`, `monitor|null`; the part after the `|` has
   the same meaning as in the normal `as''` ice.
 
 So, for example:
 
 ```zsh
-zplugin id-as=fzf as='track|command' atclone='zpextract fzf tgz' atpull='%atclone' \
+zplugin id-as=fzf as='monitor|command' atclone='zpextract fzf tgz' atpull='%atclone' \
     dlink='/junegunn/fzf-bin/releases/download/%VERSION%/fzf-%VERSION%-linux_amd64.tgz' \
         for https://github.com/junegunn/fzf-bin/releases/
 ```
@@ -50,7 +50,7 @@ use the `dlink0''` ice to provide the pattern for the second download page. For
 example, in case of `terraform`, the Zplugin command is:
 
 ```zsh
-zplugin id-as=terraform atclone='zpextract terraform zip' as='track|command' \
+zplugin id-as=terraform atclone='zpextract terraform zip' as='monitor|command' \
     atpull='%atclone' dlink0='/terraform/%VERSION%/' \
     dlink='/terraform/%VERSION%/terraform_%VERSION%_linux_386.zip' for \
         http://releases.hashicorp.com/terraform/
@@ -63,7 +63,7 @@ just a few `/`-sections. In such case, it is possible to skip the `dlink''` ice
 by appending a `++`-separated fragment of the archive URL, like so:
 
 ```zsh
-zplugin atclone'zpextract *.zip' as'track|command' atpull'%atclone' for \
+zplugin atclone'zpextract *.zip' as'monitor|command' atpull'%atclone' for \
         http://domain.com/download-page++/archive.zip
 ```
 
@@ -74,7 +74,7 @@ minus
 2. So, for example:
 
 ```zsh
-zplugin atclone'zpextract *.zip' as'track|command' atpull'%atclone' for \
+zplugin atclone'zpextract *.zip' as'monitor|command' atpull'%atclone' for \
     http://domain.com/download-page/removed-section+++/archive.zip
 ```
 
@@ -83,8 +83,8 @@ zplugin atclone'zpextract *.zip' as'track|command' atpull'%atclone' for \
 The annex provides:
 
 1.  Two new ices: `dlink''` and `dlink0''`.
-2.  A handling of the special values of the `as''` ice, i.e.: of `as'track'`,
-    `as'track|command'`, etc.
+2.  A handling of the special values of the `as''` ice, i.e.: of `as'monitor'`,
+    `as'monitor|command'`, etc.
 
 The annex works only with snippets, not plugins.
 
@@ -93,11 +93,11 @@ The annex works only with snippets, not plugins.
 Simply load like a regular plugin, i.e.:
 
 ```zsh
-zplugin light zplugin/z-a-as-track
+zplugin light zplugin/z-a-as-monitor
 ```
 
 After executing the above command (possibly via `zshrc`) it's then possible to
-use the `dlink''` and `dlink0''` ices and also the special `as'track…'` value of
+use the `dlink''` and `dlink0''` ices and also the special `as'monitor…'` value of
 the `as''` ice.
 
 <!-- vim:set ft=markdown tw=80 fo+=a1n autoindent:  -->

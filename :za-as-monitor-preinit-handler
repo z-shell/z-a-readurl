@@ -7,26 +7,26 @@
 emulate -LR zsh
 setopt extendedglob warncreateglobal typesetsilent noshortloops rcquotes
 
-[[ ${ZPLG_ICE[as]} != monitor* && ${ZPLG_ICE[.monitor]} != monitor* ]] && return 0
+[[ ${ZINIT_ICE[as]} != monitor* && ${ZINIT_ICE[.monitor]} != monitor* ]] && return 0
 [[ $1 = plugin ]] && {
-    print -P -- "${ZPLGM[col-pre]}as-monitor annex: ${ZPLGM[col-error]}ERROR: as'${ZPLG_ICE[as]}'" \
+    print -P -- "${ZINIT[col-pre]}as-monitor annex: ${ZINIT[col-error]}ERROR: as'${ZINIT_ICE[as]}'" \
         "ice can be used only with snippets%f"
     return 0
 }
 
 local __type="$1" __url="$2" __id_as="$3" __dir="$4" __hook="$5"
 
-ZPLG_ICE[.monitor]=${ZPLG_ICE[.monitor]:-${ZPLG_ICE[as]}}
+ZINIT_ICE[.monitor]=${ZINIT_ICE[.monitor]:-${ZINIT_ICE[as]}}
 
-if [[ ${ZPLG_ICE[as]} = (monitor\||)(command|program) ]] {
-    ZPLG_ICE[as]=command
-} elif [[ ${ZPLG_ICE[as]} = (monitor\||)completion ]] {
-    ZPLG_ICE[as]=completion
-} elif [[ ${ZPLG_ICE[as]} = (monitor\||)null ]] {
-    ZPLG_ICE[as]=null
-    ZPLG_ICE[pick]=${ZPLG_ICE[pick]:-/dev/null}
+if [[ ${ZINIT_ICE[as]} = (monitor\||)(command|program) ]] {
+    ZINIT_ICE[as]=command
+} elif [[ ${ZINIT_ICE[as]} = (monitor\||)completion ]] {
+    ZINIT_ICE[as]=completion
+} elif [[ ${ZINIT_ICE[as]} = (monitor\||)null ]] {
+    ZINIT_ICE[as]=null
+    ZINIT_ICE[pick]=${ZINIT_ICE[pick]:-/dev/null}
 } else {
-    unset 'ZPLG_ICE[as]'
+    unset 'ZINIT_ICE[as]'
 }
 
 if [[ -d $__dir && -z ${opts[(r)-u]} ]] {
@@ -37,13 +37,13 @@ local -a match mbegin mend reply
 local MATCH REPLY
 integer MBEGIN MEND
 
-(( ${+functions[-zplg-setup-plugin-dir]} )) || builtin source ${ZPLGM[BIN_DIR]}/zplugin-install.zsh
+(( ${+functions[.zinit-setup-plugin-dir]} )) || builtin source ${ZINIT[BIN_DIR]}/zplugin-install.zsh
 
 match=()
 local dlpage=${__url%(#b)([^+])++*}
 dlpage=$dlpage${match[1]}
 
-if [[ -z ${ZPLG_ICE[dlink]} ]] {
+if [[ -z ${ZINIT_ICE[dlink]} ]] {
     local plus=${(MS)__url%%[^+]++##} pattern_url=$dlpage
     plus=${plus#?++}
     while [[ -n $plus ]] {
@@ -53,19 +53,19 @@ if [[ -z ${ZPLG_ICE[dlink]} ]] {
     local pattern_url=${pattern_url}/${__url##*++}
 } else {
     local -a urls
-    urls=( ${(s.;.)ZPLG_ICE[dlink]} )
+    urls=( ${(s.;.)ZINIT_ICE[dlink]} )
     if (( ${#urls} == 2 )) {
         local pattern_url=${urls[@]:#0*} pattern_url0=${${(M)urls[@]:#0*}##0(:|=)(#c0,1)}
     } elif (( ${#urls} > 2 )) {
-        print -P -- "${ZPLGM[col-pre]}as-monitor annex: ${ZPLGM[col-error]}ERROR:" \
-            "${ZPLGM[col-msg2]}The ice ${ZPLGM[col-obj2]}dlink''${ZPLGM[col-msg2]}" \
+        print -P -- "${ZINIT[col-pre]}as-monitor annex: ${ZINIT[col-error]}ERROR:" \
+            "${ZINIT[col-msg2]}The ice ${ZINIT[col-obj2]}dlink''${ZINIT[col-msg2]}" \
             "has been used too many times (i.e.:" \
-            "${ZPLGM[col-obj]}${#urls}${ZPLGM[col-msg2]}, while it can be used at most" \
-            "two times, as ${ZPLGM[col-obj]}dlink0''${ZPLGM[col-msg2]}" \
-            "and then ${ZPLGM[col-obj]}dlink''${ZPLGM[col-msg2]}), aborting.%f"
+            "${ZINIT[col-obj]}${#urls}${ZINIT[col-msg2]}, while it can be used at most" \
+            "two times, as ${ZINIT[col-obj]}dlink0''${ZINIT[col-msg2]}" \
+            "and then ${ZINIT[col-obj]}dlink''${ZINIT[col-msg2]}), aborting.%f"
         return 9
     } else {
-        local pattern_url=${ZPLG_ICE[dlink]}
+        local pattern_url=${ZINIT_ICE[dlink]}
     }
 }
 
@@ -76,10 +76,10 @@ local pattern_url0=${pattern_url0//\%VERSION\%/[.,a-zA-Z0-9_-]\\+}
 
 local cur_paturl
 for cur_paturl ( $pattern_url0 $pattern_url ) {
-    -zplg-download-file-stdout $dlpage 1 >! $tmpfile || {
-        -zplg-download-file-stdout $dlpage >! $tmpfile || {
-            print -P "${ZPLGM[col-pre]}as-monitor annex: ${ZPLGM[col-error]}ERROR: couldn't" \
-                "fetch the download page (${ZPLGM[col-obj]}${dlpage//\%/%%}${ZPLGM[col-error]})%f"
+    .zinit-download-file-stdout $dlpage 1 >! $tmpfile || {
+        .zinit-download-file-stdout $dlpage >! $tmpfile || {
+            print -P "${ZINIT[col-pre]}as-monitor annex: ${ZINIT[col-error]}ERROR: couldn't" \
+                "fetch the download page (${ZINIT[col-obj]}${dlpage//\%/%%}${ZINIT[col-error]})%f"
             return 9
         }
     }
@@ -90,10 +90,10 @@ for cur_paturl ( $pattern_url0 $pattern_url ) {
     local selected=${list[1]#href=?}
 
     if [[ -z $selected ]] {
-        print -P -- "${ZPLGM[col-pre]}as-monitor annex: ${ZPLGM[col-error]}ERROR:%f" \
+        print -P -- "${ZINIT[col-pre]}as-monitor annex: ${ZINIT[col-error]}ERROR:%f" \
             "couldn't match the URL${${(M)cur_paturl:#$pattern_url0}:+-0} at the download page" \
-            "(which is ${ZPLGM[col-obj]}${dlpage//\%/%%}%f"\
-"${${__id_as:#$__url}:+\; the snippet is being identified as ${ZPLGM[col-obj2]}$__id_as%f})"
+            "(which is ${ZINIT[col-obj]}${dlpage//\%/%%}%f"\
+"${${__id_as:#$__url}:+\; the snippet is being identified as ${ZINIT[col-obj2]}$__id_as%f})"
         return 9
     }
 
@@ -103,7 +103,7 @@ for cur_paturl ( $pattern_url0 $pattern_url ) {
             protocol=${match[1]} domain=${match[5]}
         }
         if [[ -z $domain ]] {
-            print -P -- "${ZPLGM[col-pre]}as-monitor annex: ${ZPLGM[col-error]}ERROR:" \
+            print -P -- "${ZINIT[col-pre]}as-monitor annex: ${ZINIT[col-error]}ERROR:" \
                 "couldn't establish the domain name" \
                 "(unsupported protocol? supported are: http(s),ftp(s),ssh,scp).%f"
             return 9
@@ -138,10 +138,10 @@ if [[ -n ${opts[(r)-u]} && -z ${opts[(r)-f]} ]] {
 
 # Assign outer-scope parameters
 url=$new_url
-ZPLG_ICE[url_rsvd]=$new_url
+ZINIT_ICE[url_rsvd]=$new_url
 
-print -P -- "${ZPLGM[col-pre]}as-monitor annex: ${ZPLGM[col-msg]}Matched the" \
-    "following URL: ${ZPLGM[col-obj]}$new_url%f"
+print -P -- "${ZINIT[col-pre]}as-monitor annex: ${ZINIT[col-msg]}Matched the" \
+    "following URL: ${ZINIT[col-obj]}$new_url%f"
 
 return 0
 

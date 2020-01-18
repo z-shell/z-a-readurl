@@ -12,7 +12,7 @@ autoload -Uz :za-as-monitor-preinit-handler
 # An empty stub to fill the help handler fields
 :za-as-monitor-help-null-handler() { :; }
 
-@zplg-register-annex "z-a-as-monitor" \
+@zinit-register-annex "z-a-as-monitor" \
     hook:preinit \
     :za-as-monitor-preinit-handler \
     :za-as-monitor-help-null-handler \

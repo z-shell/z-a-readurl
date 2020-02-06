@@ -32,7 +32,7 @@ So, for example:
 ```zsh
 zplugin id-as=fzf as='monitor|command' atclone='zpextract fzf tgz' atpull='%atclone' \
     dlink='/junegunn/fzf-bin/releases/download/%VERSION%/fzf-%VERSION%-linux_amd64.tgz' \
-        for https://github.com/junegunn/fzf-bin/releases/
+        is-snippet for https://github.com/junegunn/fzf-bin/releases/
 ```
 
 The snippet is just an example. The same effect is obtained by loading as
@@ -52,7 +52,8 @@ example, in case of `terraform`, the Zplugin command is:
 ```zsh
 zplugin id-as=terraform atclone='zpextract terraform zip' as='monitor|command' \
     atpull='%atclone' dlink0='/terraform/%VERSION%/' \
-    dlink='/terraform/%VERSION%/terraform_%VERSION%_linux_386.zip' for \
+    dlink='/terraform/%VERSION%/terraform_%VERSION%_linux_386.zip' \
+    is-snippet for \
         http://releases.hashicorp.com/terraform/
 ```
 
@@ -63,8 +64,9 @@ just a few `/`-sections. In such case, it is possible to skip the `dlink''` ice
 by appending a `++`-separated fragment of the archive URL, like so:
 
 ```zsh
-zplugin atclone'zpextract *.zip' as'monitor|command' atpull'%atclone' for \
-        http://domain.com/download-page++/archive.zip
+zplugin atclone'zpextract *.zip' as'monitor|command' atpull'%atclone' \
+        is-snippet for \
+            http://domain.com/download-page++/archive.zip
 ```
 
 If the archive URL has some different `/`-sections, then it's possible to strip
@@ -74,8 +76,9 @@ minus
 2. So, for example:
 
 ```zsh
-zplugin atclone'zpextract *.zip' as'monitor|command' atpull'%atclone' for \
-    http://domain.com/download-page/removed-section+++/archive.zip
+zplugin atclone'zpextract *.zip' as'monitor|command' atpull'%atclone' \
+    is-snippet for \
+        http://domain.com/download-page/removed-section+++/archive.zip
 ```
 
 ## Summary

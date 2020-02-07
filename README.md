@@ -14,7 +14,7 @@
 
 ## Introduction
 
-This Zplugin extension allows to automatically download the newest version of
+This Zinit extension allows to automatically download the newest version of
 a file to which URL is hosted on a webpage.
 
 It works as follows:
@@ -30,7 +30,7 @@ It works as follows:
 So, for example:
 
 ```zsh
-zplugin id-as=fzf as='monitor|command' atclone='zpextract fzf tgz' atpull='%atclone' \
+zinit id-as=fzf as='monitor|command' extract \
     dlink='/junegunn/fzf-bin/releases/download/%VERSION%/fzf-%VERSION%-linux_amd64.tgz' \
         is-snippet for https://github.com/junegunn/fzf-bin/releases/
 ```
@@ -47,11 +47,11 @@ Sometimes, like it is in case of
 [terraform](http://releases.hashicorp.com/terraform) command, the final download
 link isn't at the download page, but on a page that's listed on it. In such case
 use the `dlink0''` ice to provide the pattern for the second download page. For
-example, in case of `terraform`, the Zplugin command is:
+example, in case of `terraform`, the Zinit command is:
 
 ```zsh
-zplugin id-as=terraform atclone='zpextract terraform zip' as='monitor|command' \
-    atpull='%atclone' dlink0='/terraform/%VERSION%/' \
+zinit id-as=terraform as='monitor|command' extract \
+    dlink0='/terraform/%VERSION%/' \
     dlink='/terraform/%VERSION%/terraform_%VERSION%_linux_386.zip' \
     is-snippet for \
         http://releases.hashicorp.com/terraform/
@@ -64,7 +64,7 @@ just a few `/`-sections. In such case, it is possible to skip the `dlink''` ice
 by appending a `++`-separated fragment of the archive URL, like so:
 
 ```zsh
-zplugin atclone'zpextract *.zip' as'monitor|command' atpull'%atclone' \
+zinit as'monitor|command' extract \
         is-snippet for \
             http://domain.com/download-page++/archive.zip
 ```
@@ -76,7 +76,7 @@ minus
 2. So, for example:
 
 ```zsh
-zplugin atclone'zpextract *.zip' as'monitor|command' atpull'%atclone' \
+zinit as'monitor|command' extract \
     is-snippet for \
         http://domain.com/download-page/removed-section+++/archive.zip
 ```
@@ -96,7 +96,7 @@ The annex works only with snippets, not plugins.
 Simply load like a regular plugin, i.e.:
 
 ```zsh
-zplugin light zplugin/z-a-as-monitor
+zinit light zinit-zsh/z-a-as-monitor
 ```
 
 After executing the above command (possibly via `zshrc`) it's then possible to

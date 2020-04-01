@@ -99,7 +99,9 @@ for cur_paturl ( $pattern_url0 $pattern_url ) {
         builtin print -P -- "${ZINIT[col-pre]}as-monitor annex: ${ZINIT[col-error]}ERROR:%f" \
             "couldn't match the URL${${(M)cur_paturl:#$pattern_url0}:+-0} at the download page" \
             "(which is ${ZINIT[col-obj]}${dlpage//\%/%%}%f"\
-"${${__id_as:#$__url}:+\; the snippet is being identified as ${ZINIT[col-obj2]}$__id_as%f})"
+"${${__id_as:#$__url}:+\; the snippet is being identified as" \
+            "${ZINIT[col-obj2]}$__id_as%f%b}; was matching" \
+            "${ZINIT[col-obj2]}$cur_paturl%f%b)."
         return 9
     }
 

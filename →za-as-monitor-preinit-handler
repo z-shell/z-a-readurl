@@ -7,7 +7,7 @@
 builtin emulate -LR zsh
 builtin setopt extendedglob warncreateglobal typesetsilent noshortloops rcquotes
 
-[[ ${ZINIT_ICE[as]} != monitor* && ${ZINIT_ICE[.monitor]} != monitor* ]] && return 0
+[[ ${ZINIT_ICE[as]} != (monitor*|*monitor) && ${ZINIT_ICE[.monitor]} != (monitor*|*monitor) ]] && return 0
 [[ $1 = plugin ]] && {
     builtin print -P -- "${ZINIT[col-pre]}as-monitor annex: ${ZINIT[col-error]}ERROR: as'${ZINIT_ICE[as]}'" \
         "ice can be used only with snippets%f"
@@ -18,11 +18,11 @@ local __type="$1" __url="$2" __id_as="$3" __dir="$4" __hook="$5"
 
 ZINIT_ICE[.monitor]=${ZINIT_ICE[.monitor]:-${ZINIT_ICE[as]}}
 
-if [[ ${ZINIT_ICE[as]} = (monitor\||)(command|program) ]] {
+if [[ ${ZINIT_ICE[as]} = ((monitor\||)(command|program)|(command|program)(\|monitor|)) ]] {
     ZINIT_ICE[as]=command
-} elif [[ ${ZINIT_ICE[as]} = (monitor\||)completion ]] {
+} elif [[ ${ZINIT_ICE[as]} = ((monitor\||)completion|completion(\|monitor|)) ]] {
     ZINIT_ICE[as]=completion
-} elif [[ ${ZINIT_ICE[as]} = (monitor\||)null ]] {
+} elif [[ ${ZINIT_ICE[as]} = ((monitor\||)null|null(\|monitor|)) ]] {
     ZINIT_ICE[as]=null
     ZINIT_ICE[pick]=${ZINIT_ICE[pick]:-/dev/null}
 } else {

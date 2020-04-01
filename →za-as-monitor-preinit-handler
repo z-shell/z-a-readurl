@@ -84,7 +84,7 @@ local cur_paturl
 for cur_paturl ( $pattern_url0 $pattern_url ) {
     .zinit-download-file-stdout $dlpage 1 >! $tmpfile || {
         .zinit-download-file-stdout $dlpage >! $tmpfile || {
-            print -P "${ZINIT[col-pre]}as-monitor annex: ${ZINIT[col-error]}ERROR: couldn't" \
+            builtin print -P "${ZINIT[col-pre]}as-monitor annex: ${ZINIT[col-error]}ERROR: couldn't" \
                 "fetch the download page (${ZINIT[col-obj]}${dlpage//\%/%%}${ZINIT[col-error]})%f"
             return 9
         }

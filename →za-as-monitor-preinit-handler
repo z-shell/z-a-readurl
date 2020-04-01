@@ -26,6 +26,12 @@ if [[ ${ZINIT_ICE[as]} = ((monitor\||)(command|program)|(command|program)(\|moni
     ZINIT_ICE[as]=null
     ZINIT_ICE[pick]=${ZINIT_ICE[pick]:-/dev/null}
 } else {
+    if [[ ${ZINIT_ICE[as]} != monitor ]] {
+        builtin print -P "${ZINIT[col-pre]}as-monitor annex: ${ZINIT[col-msg2]}" \
+                "Warning: Unrecognized as'monitor' variant" \
+                "(${ZINIT[col-obj]}${ZINIT_ICE[as]}${ZINIT[col-msg2]})." \
+                "Falling back to ${ZINIT[col-obj]}as'monitor'${ZINIT[col-msg2]}.%f%b"
+    }
     unset 'ZINIT_ICE[as]'
 }
 

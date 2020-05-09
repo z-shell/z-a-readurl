@@ -91,9 +91,10 @@ for cur_paturl ( $pattern_url0 $pattern_url ) {
     }
 
     local -a list
-    list=( ${(@f)"$(noglob command egrep -io "href=.$cur_paturl" $tmpfile)"} )
+    list=( ${(@f)"$(noglob command egrep -io "href=.?$cur_paturl" $tmpfile)"} )
 
-    local selected=${list[1]#href=?}
+    local selected=${list[1]#href=}
+    selected=${selected#[\"\']}
 
     if [[ -z $selected ]] {
         builtin print -P -- "${ZINIT[col-pre]}as-monitor annex: ${ZINIT[col-error]}ERROR:%f" \

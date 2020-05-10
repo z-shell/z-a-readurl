@@ -32,7 +32,7 @@ So, for example:
 ```zsh
 zinit id-as=fzf as='monitor|command' extract \
     dlink='/junegunn/fzf-bin/releases/download/%VERSION%/fzf-%VERSION%-linux_amd64.tgz' \
-        is-snippet for https://github.com/junegunn/fzf-bin/releases/
+        for https://github.com/junegunn/fzf-bin/releases/
 ```
 
 The snippet is just an example. The same effect is obtained by loading as
@@ -53,7 +53,7 @@ example, in case of `terraform`, the Zinit command is:
 zinit id-as=terraform as='monitor|command' extract \
     dlink0='/terraform/%VERSION%/' \
     dlink='/terraform/%VERSION%/terraform_%VERSION%_linux_386.zip' \
-    is-snippet for \
+    for \
         http://releases.hashicorp.com/terraform/
 ```
 
@@ -64,8 +64,7 @@ just a few `/`-sections. In such case, it is possible to skip the `dlink''` ice
 by appending a `++`-separated fragment of the archive URL, like so:
 
 ```zsh
-zinit as'monitor|command' extract \
-        is-snippet for \
+zinit as'monitor|command' extract for \
             http://domain.com/download-page++/archive.zip
 ```
 
@@ -76,8 +75,7 @@ minus
 2. So, for example:
 
 ```zsh
-zinit as'monitor|command' extract \
-    is-snippet for \
+zinit as'monitor|command' extract for \
         http://domain.com/download-page/removed-section+++/archive.zip
 ```
 

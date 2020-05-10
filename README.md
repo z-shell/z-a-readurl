@@ -98,7 +98,7 @@ zinit light zinit-zsh/z-a-as-monitor
 ```
 
 After executing the above command (possibly via `zshrc`) it's then possible to
-use the `dlink''` and `dlink0''` ices and also the special `as'monitor…'` value of
-the `as''` ice.
+use the `dlink''` and `dlink0''` ices and also the special `as'monitor|…'` value
+of the `as''` ice.
 
 <!-- vim:set ft=markdown tw=80 fo+=a1n autoindent:  -->

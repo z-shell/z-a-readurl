@@ -46,8 +46,8 @@ a full URL (i.e.: beginning with the `http://…` prefix).
 Sometimes, like it is in case of
 [terraform](http://releases.hashicorp.com/terraform) command, the final download
 link isn't at the download page, but on a page that's listed on it. In such case
-use the `dlink0''` ice to provide the pattern for the second download page. For
-example, in case of `terraform`, the Zinit command is:
+use the `dlink0''` ice to provide the pattern for the additional, intermediate
+download page. For example, in case of `terraform`, the Zinit command is:
 
 ```zsh
 zinit id-as=terraform as='monitor|command' extract \

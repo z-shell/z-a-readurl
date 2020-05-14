@@ -49,6 +49,11 @@ match=()
 local dlpage=${__url%(#b)([^+])++*}
 dlpage=$dlpage${match[1]}
 
+if [[ -z $ZINIT_ICE[dlink] && $ZINIT_ICE[dl] == ink=[-/[:alnum:]]* ]] {
+    ZINIT_ICE[dlink]=${ZINIT_ICE[dl]#ink=}
+    unset 'ZINIT_ICE[dl]'
+}
+
 if [[ -z ${ZINIT_ICE[dlink]} ]] {
     local plus=${(MS)__url%%[^+]++##} pattern_url=$dlpage
     plus=${plus#?++}

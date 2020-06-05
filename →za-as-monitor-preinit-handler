@@ -52,8 +52,8 @@ match=()
 local dlpage=${__url%(#b)([^+])++*}
 dlpage=$dlpage${match[1]}
 
-if [[ -z $ZINIT_ICE[dlink] && $ZINIT_ICE[dl] == ink=[-/[:alnum:]]* ]] {
-    ZINIT_ICE[dlink]=${ZINIT_ICE[dl]#ink=}
+if [[ -z $ZINIT_ICE[dlink] && $ZINIT_ICE[dl] == ink(0|)(=|:)(#c0,1)[-/[:alnum:]]* ]] {
+    ZINIT_ICE[dlink]=${(j.;.)${${(@s.;.)ZINIT_ICE[dl]}#ink}}
     unset 'ZINIT_ICE[dl]'
 }
 

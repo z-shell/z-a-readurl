@@ -1,4 +1,7 @@
 #!/usr/bin/env zsh
+
+→za-as-monitor-preinit-handler() {
+
 # -*- mode: sh; sh-indentation: 4; indent-tabs-mode: nil; sh-basic-offset: 4; -*-
 
 # Copyright (c) 2019 Sebastian Gniazdowski
@@ -160,5 +163,7 @@ builtin print -P -- "${ZINIT[col-pre]}as-monitor annex: ${ZINIT[col-msg]}Matched
     "following URL: ${ZINIT[col-obj]}$new_url%f"
 
 return 0
+
+}
 
 # vim:ft=zsh:tw=80:sw=4:sts=4:et

@@ -102,6 +102,37 @@ After executing the above command (possibly via `zshrc`) it's then possible to
 use the `dlink''` and `dlink0''` ices and also the special `as'monitor|…'` value
 of the `as''` ice.
 
+## Sorting The Matched URLs / Package Versions
+
+Sometimes the download page doesn't list the package versions from newest to the
+oldest, but in some other order. In such case it's possible to sort the URLs
+/ package versions by prepending the chosen `dlink` ice (`dlink0''` or
+`dlink''`) with the exclamation mark. See the next section for an example
+
+## Filtering The Matched URLs
+
+Sometimes there are some unwanted URLs that match the `dlink''`/`dlink0''`
+regex / pattern. In such case it's possible to filter them out by appending
+a filtering regex to the `dlink''` ice as:
+`dlink='the-main-regex~%the-unwanted-URLs-regex%'` (or the same for `dlink0''`).
+An example package that can benefit from this is the [Open
+Shift](https://www.openshift.com/) client, which doesn't sort the URLs from
+latest to the oldest – hence the exclamation mark (`!`) prepend – and it has
+special URLs like `stable-4.4` or `candidate-4.5` together with the regular
+version URLs (like `4.5.0-rc.1`):
+
+
+```zsh
+zinit id-as"ocp" as"monitor|command" \
+    dlink0'!%VERSION%~%(stable|latest|fast|candidate).*%' \
+    dlink"openshift-client-windows-%VERSION%.zip"  for \
+        https://mirror.openshift.com/pub/openshift-v4/clients/ocp/
+```
+
+The above snippet of Zsh code / Zinit invocation will sort the URLs and then
+filter out the special ones from the results, this way selecting the latest
+version of the Open Shift client.
+
 ## Other Examples
 
 [**Pulumi**](https://www.pulumi.com/), a tool to create, deploy, and manage modern cloud software.

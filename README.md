@@ -10,6 +10,8 @@
 - [Summary](#summary)
 - [Installation](#installation)
 - [Other Examples](#other-examples)
+- [Sorting The Matched URLs / Package Versions](#sorting-the-matched-urls--package-versions)
+- [Filtering The Matched URLs](#filtering-the-matched-urls)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

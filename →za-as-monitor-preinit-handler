@@ -52,7 +52,7 @@ match=()
 local dlpage=${__url%(#b)([^+])++*}
 dlpage=$dlpage${match[1]}
 
-if [[ -z $ZINIT_ICE[dlink] && $ZINIT_ICE[dl] == ink(0)(#c0,1)[=:](#c0,1)[-_/[:alnum:]]* ]] {
+if [[ $ZINIT_ICE[dl] == (*\;)(#c0,1)ink(0)(#c0,1)[=:](#c0,1)[-_/[:alnum:]]* ]] {
     ZINIT_ICE[dlink]=${(j.;.)${${(@M)${(@s.;.)ZINIT_ICE[dl]}:#ink([=:]|)*}##ink([=:]|)}}
     ZINIT_ICE[dl]=${(j.;.)${(@s.;.)ZINIT_ICE[dl]}:#ink([=:]|)*}
     [[ -z $ZINIT_ICE[dlink] ]] && unset 'ZINIT_ICE[dlink]'

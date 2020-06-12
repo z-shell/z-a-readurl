@@ -158,9 +158,12 @@ if [[ -n $opts[(r)-u] && -z $opts[(r)-f] ]] {
 # Assign outer-scope parameters
 url=$new_url
 ZINIT_ICE[url_rsvd]=$new_url
-typeset -gA ICE_OPTS
-ICE_OPTS[opt_-q,--quiet]=0
 ZINIT[annex-multi-flag:pull-active]=2
+
+if [[ -n $opts[(r)-u] ]] {
+    typeset -gA ICE_OPTS
+    ICE_OPTS[opt_-q,--quiet]=0
+}
 
 +zinit-message "[pre]as-monitor annex: [msg1]Matched the" \
     "following URL: [obj]${new_url}[rst]"

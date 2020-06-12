@@ -12,7 +12,7 @@ builtin setopt extendedglob warncreateglobal typesetsilent noshortloops rcquotes
 
 [[ ${ZINIT_ICE[as]} != (monitor*|*monitor) && ${ZINIT_ICE[.monitor]} != (monitor*|*monitor) ]] && return 0
 [[ $1 = plugin ]] && {
-    builtin print -P -- "${ZINIT[col-pre]}as-monitor annex: ${ZINIT[col-error]}ERROR: as'${ZINIT_ICE[as]}'" \
+    builtin print -P -- "$ZINIT[col-pre]as-monitor annex: $ZINIT[col-error]ERROR: as'${ZINIT_ICE[as]}'" \
         "ice can be used only with snippets%f"
     return 0
 }
@@ -30,10 +30,10 @@ if [[ ${ZINIT_ICE[as]} = ((monitor\||)(command|program)|(command|program)(\|moni
     ZINIT_ICE[pick]=${ZINIT_ICE[pick]:-/dev/null}
 } else {
     if [[ ${ZINIT_ICE[as]} != monitor ]] {
-        builtin print -P "${ZINIT[col-pre]}as-monitor annex: ${ZINIT[col-msg2]}" \
+        builtin print -P "$ZINIT[col-pre]as-monitor annex: $ZINIT[col-msg2]" \
                 "Warning: Unrecognized as'monitor' variant" \
-                "(${ZINIT[col-obj]}${ZINIT_ICE[as]}${ZINIT[col-msg2]})." \
-                "Falling back to ${ZINIT[col-obj]}as'monitor'${ZINIT[col-msg2]}.%f%b"
+                "($ZINIT[col-obj]${ZINIT_ICE[as]}$ZINIT[col-msg2])." \
+                "Falling back to $ZINIT[col-obj]as'monitor'$ZINIT[col-msg2].%f%b"
     }
     unset 'ZINIT_ICE[as]'
 }
@@ -46,7 +46,7 @@ local -a match mbegin mend reply
 local MATCH REPLY
 integer MBEGIN MEND
 
-(( ${+functions[.zinit-setup-plugin-dir]} )) || builtin source ${ZINIT[BIN_DIR]}/zinit-install.zsh
+(( $+functions[.zinit-setup-plugin-dir] )) || builtin source $ZINIT[BIN_DIR]/zinit-install.zsh
 
 match=()
 local dlpage=${__url%(#b)([^+])++*}
@@ -73,12 +73,12 @@ if [[ -z ${ZINIT_ICE[dlink]} ]] {
     if (( ${#urls} == 2 )) {
         local pattern_url=${urls[@]:#0*} pattern_url0=${${(M)urls[@]:#0*}##0(:|=)(#c0,1)}
     } elif (( ${#urls} > 2 )) {
-        builtin print -P -- "${ZINIT[col-pre]}as-monitor annex: ${ZINIT[col-error]}ERROR:" \
-            "${ZINIT[col-msg2]}The ice ${ZINIT[col-obj2]}dlink''${ZINIT[col-msg2]}" \
+        builtin print -P -- "$ZINIT[col-pre]as-monitor annex: $ZINIT[col-error]ERROR:" \
+            "$ZINIT[col-msg2]The ice $ZINIT[col-obj2]dlink''$ZINIT[col-msg2]" \
             "has been used too many times (i.e.:" \
-            "${ZINIT[col-obj]}${#urls}${ZINIT[col-msg2]}, while it can be used at most" \
-            "two times, as ${ZINIT[col-obj]}dlink0''${ZINIT[col-msg2]}" \
-            "and then ${ZINIT[col-obj]}dlink''${ZINIT[col-msg2]}), aborting.%f"
+            "$ZINIT[col-obj]${#urls}$ZINIT[col-msg2], while it can be used at most" \
+            "two times, as $ZINIT[col-obj]dlink0''$ZINIT[col-msg2]" \
+            "and then $ZINIT[col-obj]dlink''$ZINIT[col-msg2]), aborting.%f"
         return 9
     } else {
         local pattern_url=${ZINIT_ICE[dlink]}
@@ -94,8 +94,8 @@ local cur_paturl
 for cur_paturl ( $pattern_url0 $pattern_url ) {
     .zinit-download-file-stdout $dlpage >! $tmpfile || {
         .zinit-download-file-stdout $dlpage 1 >! $tmpfile || {
-            builtin print -P "${ZINIT[col-pre]}as-monitor annex: ${ZINIT[col-error]}ERROR: couldn't" \
-                "fetch the download page (${ZINIT[col-obj]}${dlpage//\%/%%}${ZINIT[col-error]})%f"
+            builtin print -P "$ZINIT[col-pre]as-monitor annex: $ZINIT[col-error]ERROR: couldn't" \
+                "fetch the download page ($ZINIT[col-obj]${dlpage//\%/%%}$ZINIT[col-error])%f"
             return 9
         }
     }
@@ -107,12 +107,12 @@ for cur_paturl ( $pattern_url0 $pattern_url ) {
     selected=${selected#[\"\']}
 
     if [[ -z $selected ]] {
-        builtin print -P -- "${ZINIT[col-pre]}as-monitor annex: ${ZINIT[col-error]}ERROR:%f" \
+        builtin print -P -- "$ZINIT[col-pre]as-monitor annex: $ZINIT[col-error]ERROR:%f" \
             "couldn't match the URL${${(M)cur_paturl:#$pattern_url0}:+-0} at the download page" \
-            "(which is ${ZINIT[col-obj]}${dlpage//\%/%%}%f"\
+            "(which is $ZINIT[col-obj]${dlpage//\%/%%}%f"\
 "${${__id_as:#$__url}:+\; the snippet is being identified as" \
-"${ZINIT[col-obj2]}$__id_as%f%b}; was matching" \
-            "${ZINIT[col-obj2]}$cur_paturl%f%b)."
+"$ZINIT[col-obj2]$__id_as%f%b}; was matching" \
+            "$ZINIT[col-obj2]$cur_paturl%f%b)."
         return 9
     }
 
@@ -122,7 +122,7 @@ for cur_paturl ( $pattern_url0 $pattern_url ) {
             protocol=${match[1]} domain=${match[5]}
         }
         if [[ -z $domain ]] {
-            builtin print -P -- "${ZINIT[col-pre]}as-monitor annex: ${ZINIT[col-error]}ERROR:" \
+            builtin print -P -- "$ZINIT[col-pre]as-monitor annex: $ZINIT[col-error]ERROR:" \
                 "couldn't establish the domain name" \
                 "(unsupported protocol? supported are: http(s),ftp(s),ssh,scp).%f"
             return 9
@@ -162,8 +162,8 @@ typeset -gA ICE_OPTS
 ICE_OPTS[opt_-q,--quiet]=0
 ZINIT[annex-multi-flag:pull-active]=2
 
-builtin print -P -- "${ZINIT[col-pre]}as-monitor annex: ${ZINIT[col-msg]}Matched the" \
-    "following URL: ${ZINIT[col-obj]}$new_url%f"
+builtin print -P -- "$ZINIT[col-pre]as-monitor annex: $ZINIT[col-msg]Matched the" \
+    "following URL: $ZINIT[col-obj]$new_url%f"
 
 return 0
 

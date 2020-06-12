@@ -9,6 +9,7 @@
 - [Skipping `dlink''` Ice](#skipping-dlink-ice)
 - [Summary](#summary)
 - [Installation](#installation)
+- [Other Examples](#other-examples)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

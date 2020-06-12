@@ -110,7 +110,7 @@ for cur_paturl ( $pattern_url0 $pattern_url ) {
         +zinit-message "[pre]as-monitor annex: [error]ERROR:[rst]" \
             "couldn't match the URL${${(M)cur_paturl:#$pattern_url0}:+-0} at the download page" \
             "(which is [obj]${dlpage//\%/%%}[rst]"\
-"${${__id_as:#$__url}:+\; the snippet is being identified as" \
+"${${__id_as:#$__url}:+; the snippet is being identified as" \
 "[obj2]$__id_as[rst]%b}; was matching" \
             "[obj2]$cur_paturl[rst]%b)."
         return 9

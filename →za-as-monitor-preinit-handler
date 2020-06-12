@@ -10,9 +10,9 @@
 builtin emulate -LR zsh
 builtin setopt extendedglob warncreateglobal typesetsilent noshortloops rcquotes
 
-[[ ${ZINIT_ICE[as]} != (monitor*|*monitor) && ${ZINIT_ICE[.monitor]} != (monitor*|*monitor) ]] && return 0
+[[ $ZINIT_ICE[as] != (monitor*|*monitor) && $ZINIT_ICE[.monitor] != (monitor*|*monitor) ]] && return 0
 [[ $1 = plugin ]] && {
-    +zinit-message "[pre]as-monitor annex: [error]ERROR: as'${ZINIT_ICE[as]}'" \
+    +zinit-message "[pre]as-monitor annex: [error]ERROR: as'$ZINIT_ICE[as]'" \
         "ice can be used only with snippets[rst]"
     return 0
 }
@@ -21,24 +21,24 @@ local __type="$1" __url="$2" __id_as="$3" __dir="$4" __hook="$5"
 
 ZINIT_ICE[.monitor]=${ZINIT_ICE[.monitor]:-$ZINIT_ICE[as]}
 
-if [[ ${ZINIT_ICE[as]} = ((monitor\||)(command|program)|(command|program)(\|monitor|)) ]] {
+if [[ $ZINIT_ICE[as] = ((monitor\||)(command|program)|(command|program)(\|monitor|)) ]] {
     ZINIT_ICE[as]=command
-} elif [[ ${ZINIT_ICE[as]} = ((monitor\||)completion|completion(\|monitor|)) ]] {
+} elif [[ $ZINIT_ICE[as] = ((monitor\||)completion|completion(\|monitor|)) ]] {
     ZINIT_ICE[as]=completion
-} elif [[ ${ZINIT_ICE[as]} = ((monitor\||)null|null(\|monitor|)) ]] {
+} elif [[ $ZINIT_ICE[as] = ((monitor\||)null|null(\|monitor|)) ]] {
     ZINIT_ICE[as]=null
     ZINIT_ICE[pick]=${ZINIT_ICE[pick]:-/dev/null}
 } else {
-    if [[ ${ZINIT_ICE[as]} != monitor ]] {
+    if [[ $ZINIT_ICE[as] != monitor ]] {
         +zinit-message "[pre]as-monitor annex: [msg2]" \
                 "Warning: Unrecognized as'monitor' variant" \
-                "([obj]${ZINIT_ICE[as]}[msg2])." \
+                "([obj]$ZINIT_ICE[as][msg2])." \
                 "Falling back to [obj]as'monitor'[msg2].[rst]%b"
     }
     unset 'ZINIT_ICE[as]'
 }
 
-if [[ -d $__dir && -z ${opts[(r)-u]} ]] {
+if [[ -d $__dir && -z $opts[(r)-u] ]] {
     return 0
 }
 
@@ -50,7 +50,7 @@ integer MBEGIN MEND
 
 match=()
 local dlpage=${__url%(#b)([^+])++*}
-dlpage=$dlpage${match[1]}
+dlpage=$dlpage$match[1]
 
 if [[ $ZINIT_ICE[dl] == (*\;)(#c0,1)ink(0)(#c0,1)[=:](#c0,1)[-_/[:alnum:]]* ]] {
     ZINIT_ICE[dlink]=${(j.;.)${${(@M)${(@s.;.)ZINIT_ICE[dl]}:#ink([=:]|)*}##ink([=:]|)}}
@@ -59,7 +59,7 @@ if [[ $ZINIT_ICE[dl] == (*\;)(#c0,1)ink(0)(#c0,1)[=:](#c0,1)[-_/[:alnum:]]* ]] {
     [[ -z $ZINIT_ICE[dl] ]] && unset 'ZINIT_ICE[dl]'
 }
 
-if [[ -z ${ZINIT_ICE[dlink]} ]] {
+if [[ -z $ZINIT_ICE[dlink] ]] {
     local plus=${(MS)__url%%[^+]++##} pattern_url=$dlpage
     plus=${plus#?++}
     while [[ -n $plus ]] {
@@ -81,7 +81,7 @@ if [[ -z ${ZINIT_ICE[dlink]} ]] {
             "and then [obj]dlink''[msg2]), aborting.[rst]"
         return 9
     } else {
-        local pattern_url=${ZINIT_ICE[dlink]}
+        local pattern_url=$ZINIT_ICE[dlink]
     }
 }
 
@@ -119,7 +119,7 @@ for cur_paturl ( $pattern_url0 $pattern_url ) {
     if [[ $selected = /* ]] {
         local domain protocol
         if [[ $dlpage = (#b)(#i)((http(s|)|ftp(s|)|ssh|scp)://|)([^/]##)(*) ]] {
-            protocol=${match[1]} domain=${match[5]}
+            protocol=$match[1] domain=$match[5]
         }
         if [[ -z $domain ]] {
             +zinit-message "[pre]as-monitor annex: [error]ERROR:" \
@@ -150,7 +150,7 @@ for cur_paturl ( $pattern_url0 $pattern_url ) {
 }
 
 # Handle the update
-if [[ -n ${opts[(r)-u]} && -z ${opts[(r)-f]} ]] {
+if [[ -n $opts[(r)-u] && -z $opts[(r)-f] ]] {
     { local old_url="$(<$__dir/._zinit/url_rsvd)"; } 2>/dev/null
     [[ $old_url == $new_url ]] && return 8
 }

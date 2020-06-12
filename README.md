@@ -101,4 +101,15 @@ After executing the above command (possibly via `zshrc`) it's then possible to
 use the `dlink''` and `dlink0''` ices and also the special `as'monitor|…'` value
 of the `as''` ice.
 
+## Other Examples
+
+[**Pulumi**](https://www.pulumi.com/), a tool to create, deploy, and manage modern cloud software.
+
+```zsh
+zi id-as'pulumi' as'monitor|null' extract'!' \
+    dlink='https://get.pulumi.com/releases/sdk/pulumi-%VERSION%-linux-x64.tar.gz' \
+    sbin'pulumi*' for \
+        https://www.pulumi.com/docs/get-started/install/versions/ \
+```
+
 <!-- vim:set ft=markdown tw=80 fo+=a1n autoindent:  -->

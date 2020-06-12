@@ -127,7 +127,7 @@ version URLs (like `4.5.0-rc.1`):
 ```zsh
 zinit id-as"ocp" as"monitor|command" \
     dlink0'!%VERSION%~%(stable|latest|fast|candidate).*%' \
-    dlink"openshift-client-windows-%VERSION%.zip"  for \
+    dlink"openshift-client-windows-%VERSION%.zip" for \
         https://mirror.openshift.com/pub/openshift-v4/clients/ocp/
 ```
 
@@ -143,7 +143,7 @@ version of the Open Shift client.
 zi id-as'pulumi' as'monitor|null' extract'!' \
     dlink='https://get.pulumi.com/releases/sdk/pulumi-%VERSION%-linux-x64.tar.gz' \
     sbin'pulumi*' for \
-        https://www.pulumi.com/docs/get-started/install/versions/ \
+        https://www.pulumi.com/docs/get-started/install/versions/
 ```
 
 <!-- vim:set ft=markdown tw=80 fo+=a1n autoindent:  -->

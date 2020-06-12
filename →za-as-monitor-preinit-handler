@@ -68,10 +68,33 @@ if [[ -z $ZINIT_ICE[dlink] ]] {
     }
     local pattern_url=${pattern_url}/${__url##*++}
 } else {
-    local -a urls
+    local -a urls sorts filters
     urls=( ${(s.;.)ZINIT_ICE[dlink]} )
     if (( ${#urls} == 2 )) {
         local pattern_url=${urls[@]:#0*} pattern_url0=${${(M)urls[@]:#0*}##0(:|=)(#c0,1)}
+        if [[ $pattern_url == \!* ]] {
+            sorts[2]=1
+            pattern_url=${pattern_url#\!}
+        }
+        if [[ $pattern_url == *[^\\]([\\][\\])#\~%[^%]##%* ]] {
+            if [[ $pattern_url == (#b)(*)\~%([^%]##)%(*) ]] {
+                pattern_url=$match[1]$match[3]
+                filters[2]=$match[2]
+            }
+        }
+        if [[ $pattern_url0 == \!* ]] {
+            sorts[1]=1
+            pattern_url0=${pattern_url0#\!}
+        }
+        if [[ $pattern_url0 == *[^\\]([\\][\\])#\~%[^%]##%* ]] {
+            if [[ $pattern_url0 == (#b)(*)\~%([^%]##)%(*) ]] {
+                pattern_url0=$match[1]$match[3]
+                filters[1]=$match[2]
+            }
+        }
+        local -A map
+        map=( ".*" "*" ".+" "?##" "+" "##" "*" "#" )
+        filters=( "${filters[@]//(#b)(${(~kj.|.)map})/$map[$match[1]]}" )
     } elif (( ${#urls} > 2 )) {
         +zinit-message "[pre]as-monitor annex: [error]ERROR:" \
             "[msg2]The ice [obj2]dlink''[msg2]" \
@@ -90,8 +113,10 @@ local tmpfile="$(mktemp)"
 pattern_url=${pattern_url//\%VERSION\%/[.,a-zA-Z0-9_-]+}
 local pattern_url0=${pattern_url0//\%VERSION\%/[.,a-zA-Z0-9_-]+}
 
+integer index
 local cur_paturl
 for cur_paturl ( $pattern_url0 $pattern_url ) {
+    index+=1
     .zinit-download-file-stdout $dlpage >! $tmpfile || {
         .zinit-download-file-stdout $dlpage 1 >! $tmpfile || {
             +zinit-message "[pre]as-monitor annex: [error]ERROR: couldn't" \
@@ -102,6 +127,15 @@ for cur_paturl ( $pattern_url0 $pattern_url ) {
 
     local -a list
     list=( ${(@f)"$(noglob command egrep -io "href=.?$cur_paturl" $tmpfile)"} )
+
+    if (( sorts[index] )) {
+        list=( ${list[@]:#[^[:digit:]]##} )
+        list=( ${(On)list[@]} )
+    }
+
+    if [[ -n $filters[index] ]] {
+        list=( ${list[@]:#href=(?|)$~filters[index]} )
+    }
 
     local selected=${list[1]#href=}
     selected=${selected#[\"\']}

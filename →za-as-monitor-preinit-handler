@@ -10,7 +10,11 @@
 builtin emulate -LR zsh
 builtin setopt extendedglob warncreateglobal typesetsilent noshortloops rcquotes
 
-[[ $ZINIT_ICE[as] != (monitor*|*monitor) && $ZINIT_ICE[.monitor] != (monitor*|*monitor) ]] && return 0
+if [[ $ZINIT_ICE[as] != (monitor*|*monitor) && $ZINIT_ICE[.monitor] != (monitor*|*monitor) ]]
+then
+    return 0
+fi
+
 [[ $1 = plugin ]] && {
     +zinit-message "[pre]as-monitor annex: [error]ERROR: as'$ZINIT_ICE[as]'" \
         "ice can be used only with snippets[rst]"

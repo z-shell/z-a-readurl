@@ -16,8 +16,8 @@ then
 fi
 
 [[ $1 = plugin ]] && {
-    +zinit-message "[pre]as-monitor annex: [error]ERROR: as'$ZINIT_ICE[as]'" \
-        "ice can be used only with snippets[rst]"
+    +zinit-message "{pre}as-monitor annex: {error}ERROR: as'$ZINIT_ICE[as]'" \
+        "ice can be used only with snippets.{rst}"
     return 7
 }
 
@@ -34,10 +34,9 @@ if [[ $ZINIT_ICE[as] = ((monitor\||)(command|program)|(command|program)(\|monito
     ZINIT_ICE[pick]=${ZINIT_ICE[pick]:-/dev/null}
 } else {
     if [[ $ZINIT_ICE[as] != monitor ]] {
-        +zinit-message "[pre]as-monitor annex: [msg2]" \
-                "Warning: Unrecognized as'monitor' variant" \
-                "([obj]$ZINIT_ICE[as][msg2])." \
-                "Falling back to [obj]as'monitor'[msg2].[rst]%b"
+        +zinit-message "{pre}as-monitor annex: {msg2}" \
+                "Warning: Unrecognized as'monitor|{data2}...{msg2}' variant ({data2}$ZINIT_ICE[as]{msg2})." \
+                "Falling back to {meta}as{hi}'{data}monitor{hi}'{msg2}.{rst}%b"
     }
     unset 'ZINIT_ICE[as]'
 }
@@ -100,12 +99,9 @@ if [[ -z $ZINIT_ICE[dlink] ]] {
         map=( ".*" "*" ".+" "?##" "+" "##" "*" "#" )
         filters=( "${filters[@]//(#b)(${(~kj.|.)map})/$map[$match[1]]}" )
     } elif (( ${#urls} > 2 )) {
-        +zinit-message "[pre]as-monitor annex: [error]ERROR:" \
-            "[msg2]The ice [obj2]dlink''[msg2]" \
-            "has been used too many times (i.e.:" \
-            "[obj]${#urls}[msg2], while it can be used at most" \
-            "two times, as [obj]dlink0''[msg2]" \
-            "and then [obj]dlink''[msg2]), aborting.[rst]"
+        +zinit-message "{pre}as-monitor annex: {error}ERROR: {msg2}The ice {meta}dlink''{msg2}" \
+            "has been used too many times: {meta}#{obj}${#urls}{msg2}, while it can be used at most" \
+            "two times, as {meta2}dlink0''{msg2} and then {meta2}dlink''{msg2}, aborting.{rst}"
         return 9
     } else {
         local pattern_url=$ZINIT_ICE[dlink]
@@ -123,8 +119,8 @@ for cur_paturl ( $pattern_url0 $pattern_url ) {
     index+=1
     .zinit-download-file-stdout $dlpage >! $tmpfile || {
         .zinit-download-file-stdout $dlpage 1 >! $tmpfile || {
-            +zinit-message "[pre]as-monitor annex: [error]ERROR: couldn't" \
-                "fetch the download page ([obj]${dlpage//\%/%%}[error])[rst]"
+            +zinit-message "{pre}as-monitor annex: {error}ERROR: couldn't" \
+                "fetch the download page ({url}${dlpage//\%/%%}{error}){rst}"
             return 9
         }
     }
@@ -145,12 +141,10 @@ for cur_paturl ( $pattern_url0 $pattern_url ) {
     selected=${selected#[\"\']}
 
     if [[ -z $selected ]] {
-        +zinit-message "[pre]as-monitor annex: [error]ERROR:[rst]" \
+        +zinit-message "{pre}as-monitor annex: {error}ERROR:{rst}" \
             "couldn't match the URL${${(M)cur_paturl:#$pattern_url0}:+-0} at the download page" \
-            "(which is [obj]${dlpage//\%/%%}[rst]"\
-"${${__id_as:#$__url}:+; the snippet is being identified as" \
-"[obj2]${__id_as}[rst]%b}; was matching" \
-            "[obj2]${cur_paturl}[rst]%b)."
+            "(which is {url}${dlpage//\%/%%}{rst}${${__id_as:#$__url}:+; the snippet is being identified as" \
+"[meta]${__id_as}[rst]%b}; was matching {data2}${cur_paturl}{rst}%b)."
         return 9
     }
 
@@ -160,9 +154,8 @@ for cur_paturl ( $pattern_url0 $pattern_url ) {
             protocol=$match[1] domain=$match[5]
         }
         if [[ -z $domain ]] {
-            +zinit-message "[pre]as-monitor annex: [error]ERROR:" \
-                "couldn't establish the domain name" \
-                "(unsupported protocol? supported are: http(s),ftp(s),ssh,scp).[rst]"
+            +zinit-message "{pre}as-monitor annex: {ehi}ERROR:{error} couldn't establish the domain name (unsupported" \
+                "protocol? supported are: {data}http(s){error},{data}ftp(s){error},{data}ssh{error},{data}scp{error}).{rst}"
             return 9
         }
         local new_url=${protocol:-http://}$domain$selected
@@ -203,8 +196,7 @@ if [[ -n $opts[(r)-u] ]] {
     ICE_OPTS[opt_-q,--quiet]=0
 }
 
-+zinit-message "[pre]as-monitor annex: [msg1]Matched the" \
-    "following URL: [obj]${new_url}[rst]"
++zinit-message "{pre}as-monitor annex: {msg}Matched the following URL: {url}${new_url}{rst}"
 
 return 0
 

@@ -109,7 +109,7 @@ of the `as''` ice.
 Sometimes the download page doesn't list the package versions from newest to the
 oldest, but in some other order. In such case it's possible to sort the URLs
 / package versions by prepending the chosen `dlink` ice (`dlink0''` or
-`dlink''`) with the exclamation mark (`dlink'!…`, etc.). See the next section
+`dlink''`) with the exclamation mark (`dlink'!…'`, etc.). See the next section
 for an example.
 
 ## Filtering The Matched URLs

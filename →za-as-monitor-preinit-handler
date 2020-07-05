@@ -95,6 +95,24 @@ if [[ -z $ZINIT_ICE[dlink] ]] {
                 filters[1]=$match[2]
             }
         }
+    } elif (( ${#urls} == 1 )) {
+        local pattern_url=${urls[@]:#0*} pattern_url0=${${(M)urls[@]:#0*}##0(:|=)(#c0,1)}
+        if [[ -n $pattern_url0 ]] {
+            +zinit-message "{pre}as-monitor annex: {error}ERROR:{rst}" \
+                "The {meta}dlink0''{rst} ice cannot be used alone," \
+                "{meta}dlink''{rst} is always required."
+            return 9
+        }
+        if [[ $pattern_url == \!* ]] {
+            sorts[1]=1
+            pattern_url=${pattern_url#\!}
+        }
+        if [[ $pattern_url == *[^\\]([\\][\\])#\~%[^%]##%* ]] {
+            if [[ $pattern_url == (#b)(*)\~%([^%]##)%(*) ]] {
+                pattern_url=$match[1]$match[3]
+                filters[1]=$match[2]
+            }
+        }
     } elif (( ${#urls} > 2 )) {
         +zinit-message "{pre}as-monitor annex: {error}ERROR: {msg2}The ice {meta}dlink''{msg2}" \
             "has been used too many times: {meta}#{obj}${#urls}{msg2}, while it can be used at most" \

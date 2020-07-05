@@ -95,9 +95,6 @@ if [[ -z $ZINIT_ICE[dlink] ]] {
                 filters[1]=$match[2]
             }
         }
-        local -A map
-        map=( ".*" "*" ".+" "?##" "+" "##" "*" "#" )
-        filters=( "${filters[@]//(#b)(${(~kj.|.)map})/$map[$match[1]]}" )
     } elif (( ${#urls} > 2 )) {
         +zinit-message "{pre}as-monitor annex: {error}ERROR: {msg2}The ice {meta}dlink''{msg2}" \
             "has been used too many times: {meta}#{obj}${#urls}{msg2}, while it can be used at most" \
@@ -107,6 +104,11 @@ if [[ -z $ZINIT_ICE[dlink] ]] {
         local pattern_url=$ZINIT_ICE[dlink]
     }
 }
+
+
+local -A map
+map=( ".*" "*" ".+" "?##" "+" "##" "*" "#" )
+filters=( "${filters[@]//(#b)(${(~kj.|.)map})/$map[$match[1]]}" )
 
 local tmpfile="$(mktemp)"
 

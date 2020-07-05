@@ -109,7 +109,8 @@ of the `as''` ice.
 Sometimes the download page doesn't list the package versions from newest to the
 oldest, but in some other order. In such case it's possible to sort the URLs
 / package versions by prepending the chosen `dlink` ice (`dlink0''` or
-`dlink''`) with the exclamation mark. See the next section for an example
+`dlink''`) with the exclamation mark (`dlink'!…`, etc.). See the next section
+for an example.
 
 ## Filtering The Matched URLs
 
@@ -131,9 +132,10 @@ zinit id-as"ocp" as"monitor|command" \
         https://mirror.openshift.com/pub/openshift-v4/clients/ocp/
 ```
 
-The above snippet of Zsh code / Zinit invocation will sort the URLs and then
-filter out the special ones from the results, this way selecting the latest
-version of the Open Shift client.
+The above snippet of Zsh code / Zinit invocation will sort the URLs
+(`dlink0'!…'`) and then filter out the special ones from the results (via
+`…~%(stable|latest|fast|candidate).*%`), this way selecting the latest version
+of the Open Shift client.
 
 ## Other Examples
 

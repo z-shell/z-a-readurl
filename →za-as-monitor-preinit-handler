@@ -21,7 +21,7 @@ fi
     return 7
 }
 
-local __type="$1" __url="$2" __id_as="$3" __dir="$4" __hook="$5" __subtype="$6"
+local __type=$1 __url=$2 __id_as=$3 __dir=$4 __hook=$5 __subtype=$6
 
 ZINIT_ICE[.monitor]=${ZINIT_ICE[.monitor]:-$ZINIT_ICE[as]}
 

@@ -1,10 +1,10 @@
 #!/usr/bin/env zsh
 # -*- mode: sh; sh-indentation: 4; indent-tabs-mode: nil; sh-basic-offset: 4; -*-
 
-→za-as-monitor-preinit-handler() {
-
-
 # Copyright (c) 2019-2020 Sebastian Gniazdowski
+# License MIT
+
+→za-as-monitor-preinit-handler() {
 
 # Set the base and typically useful options
 builtin emulate -LR zsh

@@ -15,7 +15,7 @@ autoload -Uz →za-as-monitor-preinit-handler
 →za-as-monitor-help-null-handler() { :; }
 
 @zinit-register-annex "z-a-as-monitor" \
-    hook:preinit \
+    hook:preinit-10 \
     →za-as-monitor-preinit-handler \
     →za-as-monitor-help-null-handler \
     "dlink''|.monitor''" # The ice conflict with dl'' from z-a-patch-dl is being handled

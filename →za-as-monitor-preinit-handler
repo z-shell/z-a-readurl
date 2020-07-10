@@ -126,6 +126,7 @@ if [[ -z $ZINIT_ICE[dlink] ]] {
 
 local -A map
 map=( ".*" "*" ".+" "?##" "+" "##" "*" "#" )
+local -a filters
 filters=( "${filters[@]//(#b)(${(~kj.|.)map})/$map[$match[1]]}" )
 
 local tmpfile="$(mktemp)"

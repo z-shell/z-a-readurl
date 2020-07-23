@@ -10,35 +10,35 @@
 builtin emulate -LR zsh
 builtin setopt extendedglob warncreateglobal typesetsilent noshortloops rcquotes
 
-if [[ $ZINIT_ICE[as] != (monitor*|*monitor) && $ZINIT_ICE[.monitor] != (monitor*|*monitor) ]]
+if [[ $ICE[as] != (monitor*|*monitor) && $ICE[.monitor] != (monitor*|*monitor) ]]
 then
     return 0
 fi
 
 [[ $1 = plugin ]] && {
-    +zinit-message "{pre}as-monitor annex: {error}ERROR: as'$ZINIT_ICE[as]'" \
+    +zinit-message "{pre}as-monitor annex: {error}ERROR: as'$ICE[as]'" \
         "ice can be used only with snippets.{rst}"
     return 7
 }
 
 local __type=$1 __url=$2 __id_as=$3 __dir=$4 __hook=$5 __subtype=$6
 
-ZINIT_ICE[.monitor]=${ZINIT_ICE[.monitor]:-$ZINIT_ICE[as]}
+ICE[.monitor]=${ICE[.monitor]:-$ICE[as]}
 
-if [[ $ZINIT_ICE[as] = ((monitor\||)(command|program)|(command|program)(\|monitor|)) ]] {
-    ZINIT_ICE[as]=command
-} elif [[ $ZINIT_ICE[as] = ((monitor\||)completion|completion(\|monitor|)) ]] {
-    ZINIT_ICE[as]=completion
-} elif [[ $ZINIT_ICE[as] = ((monitor\||)null|null(\|monitor|)) ]] {
-    ZINIT_ICE[as]=null
-    ZINIT_ICE[pick]=${ZINIT_ICE[pick]:-/dev/null}
+if [[ $ICE[as] = ((monitor\||)(command|program)|(command|program)(\|monitor|)) ]] {
+    ICE[as]=command
+} elif [[ $ICE[as] = ((monitor\||)completion|completion(\|monitor|)) ]] {
+    ICE[as]=completion
+} elif [[ $ICE[as] = ((monitor\||)null|null(\|monitor|)) ]] {
+    ICE[as]=null
+    ICE[pick]=${ICE[pick]:-/dev/null}
 } else {
-    if [[ $ZINIT_ICE[as] != monitor ]] {
+    if [[ $ICE[as] != monitor ]] {
         +zinit-message "{pre}as-monitor annex: {msg2}" \
-                "Warning: Unrecognized as'monitor|{data2}...{msg2}' variant ({data2}$ZINIT_ICE[as]{msg2})." \
+                "Warning: Unrecognized as'monitor|{data2}...{msg2}' variant ({data2}$ICE[as]{msg2})." \
                 "Falling back to {meta}as{hi}'{data}monitor{hi}'{msg2}.{rst}%b"
     }
-    unset 'ZINIT_ICE[as]'
+    unset 'ICE[as]'
 }
 
 if [[ -d $__dir && $__subtype != update(|:*) ]] {
@@ -55,14 +55,14 @@ match=()
 local dlpage=${__url%(#b)([^+])++*}
 dlpage=$dlpage$match[1]
 
-if [[ $ZINIT_ICE[dl] == (*\;)(#c0,1)ink(0)(#c0,1)[=:](#c0,1)[-_/[:alnum:]]* ]] {
-    ZINIT_ICE[dlink]=${(j.;.)${${(@M)${(@s.;.)ZINIT_ICE[dl]}:#ink([=:]|)*}##ink([=:]|)}}
-    ZINIT_ICE[dl]=${(j.;.)${(@s.;.)ZINIT_ICE[dl]}:#ink([=:]|)*}
-    [[ -z $ZINIT_ICE[dlink] ]] && unset 'ZINIT_ICE[dlink]'
-    [[ -z $ZINIT_ICE[dl] ]] && unset 'ZINIT_ICE[dl]'
+if [[ $ICE[dl] == (*\;)(#c0,1)ink(0)(#c0,1)[=:](#c0,1)[-_/[:alnum:]]* ]] {
+    ICE[dlink]=${(j.;.)${${(@M)${(@s.;.)ICE[dl]}:#ink([=:]|)*}##ink([=:]|)}}
+    ICE[dl]=${(j.;.)${(@s.;.)ICE[dl]}:#ink([=:]|)*}
+    [[ -z $ICE[dlink] ]] && unset 'ICE[dlink]'
+    [[ -z $ICE[dl] ]] && unset 'ICE[dl]'
 }
 
-if [[ -z $ZINIT_ICE[dlink] ]] {
+if [[ -z $ICE[dlink] ]] {
     local plus=${(MS)__url%%[^+]++##} pattern_url=$dlpage
     plus=${plus#?++}
     while [[ -n $plus ]] {
@@ -72,7 +72,7 @@ if [[ -z $ZINIT_ICE[dlink] ]] {
     local pattern_url=${pattern_url}/${__url##*++}
 } else {
     local -a urls sorts filters
-    urls=( ${(s.;.)ZINIT_ICE[dlink]} )
+    urls=( ${(s.;.)ICE[dlink]} )
     if (( ${#urls} == 2 )) {
         local pattern_url=${urls[@]:#0*} pattern_url0=${${(M)urls[@]:#0*}##0(:|=)(#c0,1)}
         if [[ $pattern_url == \!* ]] {
@@ -119,7 +119,7 @@ if [[ -z $ZINIT_ICE[dlink] ]] {
             "two times, as {meta2}dlink0''{msg2} and then {meta2}dlink''{msg2}, aborting.{rst}"
         return 9
     } else {
-        local pattern_url=$ZINIT_ICE[dlink]
+        local pattern_url=$ICE[dlink]
     }
 }
 
@@ -209,12 +209,12 @@ if [[ $__subtype == update(|:*) && -z $opts[(r)-f] ]] {
 
 # Assign outer-scope parameters
 url=$new_url
-ZINIT_ICE[url_rsvd]=$new_url
+ICE[url_rsvd]=$new_url
 ZINIT[annex-multi-flag:pull-active]=2
 
 if [[ $__subtype == update(|:*) ]] {
-    typeset -gA ICE_OPTS
-    ICE_OPTS[opt_-q,--quiet]=0
+    typeset -gA OPTS
+    OPTS[opt_-q,--quiet]=0
 }
 
 +zinit-message "{pre}as-monitor annex: {msg}Matched the following URL: {url}${new_url}{rst}"

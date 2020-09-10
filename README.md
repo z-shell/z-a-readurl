@@ -1,4 +1,4 @@
-# z-a-as-monitor
+# z-a-readurl
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -26,14 +26,14 @@ It works as follows:
   syntax) on the web-page that hosts the URL to the file to download,
 - provide `dlink''` ice with the expected file-download URL replacing the version
   with the `%VERSION%` keyword,
-- also provide `as''` ice with one of the following values: `monitor`,
-  `monitor|command`, `monitor|completion`, `monitor|null`; the part after the `|` has
+- also provide `as''` ice with one of the following values: `readurl`,
+  `readurl|command`, `readurl|completion`, `readurl|null`; the part after the `|` has
   the same meaning as in the normal `as''` ice.
 
 So, for example:
 
 ```zsh
-zinit id-as=fzf as='monitor|command' extract \
+zinit id-as=fzf as='readurl|command' extract \
     dlink='/junegunn/fzf-bin/releases/download/%VERSION%/fzf-%VERSION%-linux_amd64.tgz' \
         for https://github.com/junegunn/fzf-bin/releases/
 ```
@@ -53,7 +53,7 @@ use the `dlink0''` ice to provide the pattern for the additional, intermediate
 download page. For example, in case of `terraform`, the Zinit command is:
 
 ```zsh
-zinit id-as=terraform as='monitor|command' extract \
+zinit id-as=terraform as='readurl|command' extract \
     dlink0='/terraform/%VERSION%/' \
     dlink='/terraform/%VERSION%/terraform_%VERSION%_linux_386.zip' \
     for \
@@ -67,7 +67,7 @@ just a few `/`-sections. In such case, it is possible to skip the `dlink''` ice
 by appending a `++`-separated fragment of the archive URL, like so:
 
 ```zsh
-zinit as'monitor|command' extract for \
+zinit as'readurl|command' extract for \
             http://domain.com/download-page++/archive.zip
 ```
 
@@ -78,7 +78,7 @@ minus
 2. So, for example:
 
 ```zsh
-zinit as'monitor|command' extract for \
+zinit as'readurl|command' extract for \
         http://domain.com/download-page/removed-section+++/archive.zip
 ```
 
@@ -87,8 +87,8 @@ zinit as'monitor|command' extract for \
 The annex provides:
 
 1.  Two new ices: `dlink''` and `dlink0''`.
-2.  A handling of the special values of the `as''` ice, i.e.: of `as'monitor'`,
-    `as'monitor|command'`, etc.
+2.  A handling of the special values of the `as''` ice, i.e.: of `as'readurl'`,
+    `as'readurl|command'`, etc.
 
 The annex works only with snippets, not plugins.
 
@@ -97,11 +97,11 @@ The annex works only with snippets, not plugins.
 Simply load like a regular plugin, i.e.:
 
 ```zsh
-zinit light zinit-zsh/z-a-as-monitor
+zinit light zinit-zsh/z-a-readurl
 ```
 
 After executing the above command (possibly via `zshrc`) it's then possible to
-use the `dlink''` and `dlink0''` ices and also the special `as'monitor|…'` value
+use the `dlink''` and `dlink0''` ices and also the special `as'readurl|…'` value
 of the `as''` ice.
 
 ## Sorting The Matched URLs / Package Versions
@@ -126,7 +126,7 @@ version URLs (like `4.5.0-rc.1`):
 
 
 ```zsh
-zinit id-as"ocp" as"monitor|command" \
+zinit id-as"ocp" as"readurl|command" \
     dlink0'!%VERSION%~%(stable|latest|fast|candidate).*%' \
     dlink"openshift-client-windows-%VERSION%.zip" for \
         https://mirror.openshift.com/pub/openshift-v4/clients/ocp/
@@ -142,7 +142,7 @@ of the Open Shift client.
 [**Pulumi**](https://www.pulumi.com/), a tool to create, deploy, and manage modern cloud software.
 
 ```zsh
-zi id-as'pulumi' as'monitor|null' extract'!' \
+zi id-as'pulumi' as'readurl|null' extract'!' \
     dlink='https://get.pulumi.com/releases/sdk/pulumi-%VERSION%-linux-x64.tar.gz' \
     sbin'pulumi*' for \
         https://www.pulumi.com/docs/get-started/install/versions/

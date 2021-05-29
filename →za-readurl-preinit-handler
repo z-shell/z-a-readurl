@@ -36,7 +36,7 @@ if [[ $ICE[as] = ((readurl\||)(command|program)|(command|program)(\|readurl|)) ]
     if [[ $ICE[as] != readurl ]] {
         +zinit-message "{pre}readurl annex: {msg2}" \
                 "Warning: Unrecognized as'readurl|{data2}...{msg2}' variant ({data2}$ICE[as]{msg2})." \
-                "Falling back to {meta}as{hi}'{data}readurl{hi}'{msg2}.{rst}%b"
+                "Falling back to {meta}as{hi}'{data}readurl{hi}'{msg2}.{rst}"
     }
     unset 'ICE[as]'
 }
@@ -165,7 +165,7 @@ for cur_paturl ( $pattern_url0 $pattern_url ) {
         +zinit-message "{pre}readurl annex: {error}ERROR:{rst}" \
             "couldn't match the URL${${(M)cur_paturl:#$pattern_url0}:+-0} at the download page" \
             "(which is {url}${dlpage//\%/%%}{rst}${${__id_as:#$__url}:+; the snippet is being identified as" \
-"[meta]${__id_as}[rst]%b}; was matching {data2}${cur_paturl}{rst}%b)."
+"{meta}${__id_as}{rst}}; was matching {data2}${cur_paturl}{rst})."
         return 9
     }
 

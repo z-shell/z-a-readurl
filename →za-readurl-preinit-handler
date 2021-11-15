@@ -48,7 +48,7 @@ local -a match mbegin mend
 local MATCH
 integer MBEGIN MEND
 
-(( $+functions[.zinit-setup-plugin-dir] )) || builtin source $ZINIT[BIN_DIR]/lib/zsh/install.zsh
+(( $+functions[.zinit-setup-plugin-dir] )) || builtin source $ZINIT[BIN_DIR]/zinit-install.zsh
 
 match=()
 local dlpage=${__url%(#b)([^+])++*}
@@ -202,7 +202,7 @@ for cur_paturl ( $pattern_url0 $pattern_url ) {
 
 # Handle the update
 if [[ $__subtype == update(|:*) && -z $opts[(r)-f] ]] {
-    { local old_url="$(<$__dir/._zi/url_rsvd)"; } 2>/dev/null
+    { local old_url="$(<$__dir/._ziinit/url_rsvd)"; } 2>/dev/null
     [[ $old_url == $new_url ]] && return 8
 }
 

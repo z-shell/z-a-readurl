@@ -3,7 +3,7 @@
 # shellcheck disable=SC1036,SC1072,SC1071,SC2154,SC1088
 #
 # Copyright (c) 2019-2020 Sebastian Gniazdowski
-# Copyright (c) 2021 ZA-READURL contributors
+# Copyright (c) 2021 Z-Shell ZI Contributors
 
 →za-readurl-preinit-handler() {
 

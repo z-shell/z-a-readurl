@@ -9,6 +9,8 @@
 .zcalc_history
 
 # A popular plugin manager's files
+._zi
+.zi_lastupd
 ._zinit
 .zinit_lastupd
 

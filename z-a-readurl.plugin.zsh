@@ -1,6 +1,6 @@
 # Copyright (c) 2019-2020 Sebastian Gniazdowski
-# License MIT
-
+# Copyright (c) 2021 Z-Shell ZI Contributors
+#
 # According to the Zsh Plugin Standard:
 # https://z-shell.github.io/ZSH-TOP-100/Zsh-Plugin-Standard.html
 

@@ -1,18 +1,18 @@
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 - [Introduction](#introduction)
-- [Intermediate Download Page](#intermediate-download-page)
-- [Skipping `dlink''` Ice](#skipping-dlink-ice)
-- [Summary](#summary)
-- [Installation](#installation)
-- [Other Examples](#other-examples)
-- [Sorting The Matched URLs / Package Versions](#sorting-the-matched-urls--package-versions)
-- [Filtering The Matched URLs](#filtering-the-matched-urls)
+  - [Intermediate Download Page](#intermediate-download-page)
+  - [Skipping `dlink''` Ice](#skipping-dlink-ice)
+  - [Summary](#summary)
+  - [Installation](#installation)
+  - [Sorting The Matched URLs / Package Versions](#sorting-the-matched-urls--package-versions)
+  - [Filtering The Matched URLs](#filtering-the-matched-urls)
+  - [Other Examples](#other-examples)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+# Introduction
 
-## Introduction
+> **[?]**
+> This repository not compatible with previous versions (zplugin, zinit).
+> 
+> Please upgrade to [ZI](https://github.com/z-shell-zi)
 
 This ZI extension allows to automatically download the newest version of
 a file to which URL is hosted on a webpage.

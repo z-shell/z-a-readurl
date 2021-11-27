@@ -1,17 +1,17 @@
 - [Introduction](#introduction)
-  - [Intermediate Download Page](#intermediate-download-page)
-  - [Skipping `dlink''` Ice](#skipping-dlink-ice)
-  - [Summary](#summary)
-  - [Installation](#installation)
-  - [Sorting The Matched URLs / Package Versions](#sorting-the-matched-urls--package-versions)
-  - [Filtering The Matched URLs](#filtering-the-matched-urls)
-  - [Other Examples](#other-examples)
+	- [Intermediate Download Page](#intermediate-download-page)
+	- [Skipping `dlink''` Ice](#skipping-dlink-ice)
+- [Summary](#summary)
+- [Installation](#installation)
+	- [Sorting The Matched URLs / Package Versions](#sorting-the-matched-urls--package-versions)
+	- [Filtering The Matched URLs](#filtering-the-matched-urls)
+	- [Other Examples](#other-examples)
 
 # Introduction
 
 > **[?]**
 > This repository not compatible with previous versions (zplugin, zinit).
-> 
+>
 > Please upgrade to [ZI](https://github.com/z-shell-zi)
 
 This ZI extension allows to automatically download the newest version of
@@ -19,13 +19,13 @@ a file to which URL is hosted on a webpage.
 
 It works as follows:
 
-- invoke `snippet` (or simply pass the `http://…` address using the `for`
-  syntax) on the web-page that hosts the URL to the file to download,
-- provide `dlink''` ice with the expected file-download URL replacing the version
-  with the `%VERSION%` keyword,
-- also provide `as''` ice with one of the following values: `readurl`,
-  `readurl|command`, `readurl|completion`, `readurl|null`; the part after the `|` has
-  the same meaning as in the normal `as''` ice.
+-   invoke `snippet` (or simply pass the `http://…` address using the `for`
+    syntax) on the web-page that hosts the URL to the file to download,
+-   provide `dlink''` ice with the expected file-download URL replacing the version
+    with the `%VERSION%` keyword,
+-   also provide `as''` ice with one of the following values: `readurl`,
+    `readurl|command`, `readurl|completion`, `readurl|null`; the part after the `|` has
+    the same meaning as in the normal `as''` ice.
 
 So, for example:
 
@@ -71,25 +71,24 @@ zi as'readurl|command' extract for \
 If the archive URL has some different `/`-sections, then it's possible to strip
 the conflicting ones from the download URL by using `+++`, `++++`, etc. – the
 number of the `/`-section that'll be stripped equals to the number of the `+`
-minus
-2. So, for example:
+minus 2. So, for example:
 
 ```zsh
 zi as'readurl|command' extract for \
         http://domain.com/download-page/removed-section+++/archive.zip
 ```
 
-## Summary
+# Summary
 
 The annex provides:
 
-1.  Two new ices: `dlink''` and `dlink0''`.
+1.  Two new ices: `dlink''` and `dlink0''`.
 2.  A handling of the special values of the `as''` ice, i.e.: of `as'readurl'`,
     `as'readurl|command'`, etc.
 
 The annex works only with snippets, not plugins.
 
-## Installation
+# Installation
 
 Simply load like a regular plugin, i.e.:
 
@@ -120,7 +119,6 @@ Shift](https://www.openshift.com/) client, which doesn't sort the URLs from
 latest to the oldest – hence the exclamation mark (`!`) prepend – and it has
 special URLs like `stable-4.4` or `candidate-4.5` together with the regular
 version URLs (like `4.5.0-rc.1`):
-
 
 ```zsh
 zi id-as"ocp" as"readurl|command" \

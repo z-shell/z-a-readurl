@@ -1,7 +1,9 @@
 #!/usr/bin/env zsh
-
+# shellcheck shell=sh
+# shellcheck disable=SC1036,SC1072,SC1071,SC2154,SC1088
+#
 # Copyright (c) 2019-2020 Sebastian Gniazdowski
-# License MIT
+# Copyright (c) 2021 ZA-READURL contributors
 
 →za-readurl-preinit-handler() {
 
@@ -9,9 +11,9 @@
 builtin emulate -LR zsh
 builtin setopt extendedglob warncreateglobal typesetsilent noshortloops rcquotes
 
-if [[ $ICE[as] != (readurl*|*readurl) && $ICE[.readurl] != (readurl*|*readurl) ]]
-then
-    return 0
+if [[ $ICE[as] != (readurl*|*readurl) && $ICE[.readurl] != (readurl*|*readurl) ]]; then
+# No need to load the rest of the file
+	return 0
 fi
 
 [[ $1 = plugin ]] && {

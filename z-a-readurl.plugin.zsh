@@ -12,6 +12,5 @@ autoload -Uz za-readurl-preinit-handler
 # An empty stub to fill the help handler fields
 za-readurl-help-null-handler() { :; }
 
-@zinit-register-annex "z-a-readurl" hook:preinit-10 \
-za-readurl-preinit-handler za-readurl-help-null-handler \
-"dlink''|.readurl''" # The ice conflict with dl'' from z-a-patch-dl is being handled in the other annex
+@zi-register-annex "z-a-readurl" hook:preinit-10 \
+za-readurl-preinit-handler za-readurl-help-null-handler "dlink''|.readurl''" # The ice conflict with dl'' from z-a-patch-dl is being handled in the other annex

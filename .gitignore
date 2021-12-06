@@ -11,8 +11,6 @@
 # A popular plugin manager's files
 ._zi
 .zi_lastupd
-._zinit
-.zinit_lastupd
 
 # zdharma/zshelldoc tool's files
 zsdoc/data

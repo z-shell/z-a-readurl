@@ -2,7 +2,7 @@
 # Copyright (c) 2021 Z-Shell ZI Contributors
 #
 # According to the Zsh Plugin Standard:
-# https://z-shell.github.io/ZSH-TOP-100/Zsh-Plugin-Standard.html
+# https://github.com/z-shell/zi/wiki/Zsh-Plugin-Standard#1-standardized-0-handling
 
 0="${${ZERO:-${0:#$ZSH_ARGZERO}}:-${(%):-%N}}"
 0="${${(M)0:#/*}:-$PWD/$0}"

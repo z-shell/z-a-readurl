@@ -1,3 +1,10 @@
+<h2 align="center">
+  <a href="https://github.com/z-shell/zi">
+    <img src="https://github.com/z-shell/zi/raw/main/docs/images/logo.svg" alt="Logo" width="80" height="80" />
+  </a>
+❮ ZI ❯ Annex - Read URL
+</h2> 
+
 - [Introduction](#introduction)
 	- [Intermediate Download Page](#intermediate-download-page)
 	- [Skipping `dlink''` Ice](#skipping-dlink-ice)
@@ -9,10 +16,7 @@
 
 # Introduction
 
-> **[?]**
-> This repository not compatible with previous versions (zplugin, zinit).
->
-> Please upgrade to [ZI](https://github.com/z-shell-zi)
+**[?]** This repository is compatible with [ZI](https://github.com/z-shell-zi)
 
 This ZI extension allows to automatically download the newest version of
 a file to which URL is hosted on a webpage.

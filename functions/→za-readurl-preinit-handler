@@ -2,7 +2,7 @@
 # Copyright (c) 2019-2020 Sebastian Gniazdowski
 # Copyright (c) 2021 Z-Shell ZI Contributors
 
-za-readurl-preinit-handler() {
+→za-readurl-preinit-handler() {
 
 # Set the base and typically useful options
 builtin emulate -LR zsh
@@ -212,3 +212,5 @@ if [[ $__subtype == update(|:*) ]] {
 +zi-message "{pre}readurl annex: {msg}Matched the following URL: {url}${new_url}{rst}"
 return 0
 }
+
+# vim: ft=zsh sw=2 ts=2 et

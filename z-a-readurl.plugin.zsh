@@ -1,5 +1,7 @@
-# Copyright (c) 2019-2020 Sebastian Gniazdowski
-# Copyright (c) 2021 Z-Shell ZI Contributors
+# -*- mode: zsh; sh-indentation: 2; indent-tabs-mode: nil; sh-basic-offset: 2; -*-
+# vim: ft=zsh sw=2 ts=2 et
+#
+# Copyright (c) 2021 Z-Shell Community
 #
 # According to the Zsh Plugin Standard:
 # https://z.digitalclouds.dev/community/zsh_plugin_standard/#zero-handling
@@ -16,8 +18,6 @@ autoload -Uz →za-readurl-preinit-handler
 # An empty stub to fill the help handler fields
 →za-readurl-help-null-handler() { :; }
 
+# The ice conflict with dl'' from z-a-patch-dl is being handled in the other annex
 @zi-register-annex "z-a-readurl" hook:preinit-10 \
-  →za-readurl-preinit-handler \
-  →za-readurl-help-null-handler "dlink''|.readurl''" # The ice conflict with dl'' from z-a-patch-dl is being handled in the other annex
-
-# vim: ft=zsh sw=2 ts=2 et
+  →za-readurl-preinit-handler →za-readurl-help-null-handler "dlink''|.readurl''"

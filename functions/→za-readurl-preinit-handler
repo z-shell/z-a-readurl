@@ -157,9 +157,9 @@
 
     if [[ -z $selected ]] {
       +zi-message "{annex}readurl-annex{ehi}:{rst}{error}" \
-    "Couldn't match the URL${${(M)cur_paturl:#$pattern_url0}:+-0} at the download page" \
-    "(which is {url}${dlpage//\%/%%}{rst}${${__id_as:#$__url}:+; the snippet is being identified as" \
-    "{meta}${__id_as}{rst}}; was matching {data2}${cur_paturl}{rst})"
+      "Couldn't match the URL${${(M)cur_paturl:#$pattern_url0}:+-0} at the download page" \
+      "(which is {url}${dlpage//\%/%%}{rst}${${__id_as:#$__url}:+; the snippet is being identified as" \
+      "{meta}${__id_as}{rst}; was matching {data2}${cur_paturl}{rst})"
       return 9
     }
 

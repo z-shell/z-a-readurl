@@ -47,7 +47,7 @@
   local MATCH
   integer MBEGIN MEND
 
-  (( $+functions[.zi-setup-plugin-dir] )) || builtin source $ZI[BIN_DIR]/lib/zsh/install.zsh
+  (( $+functions[.zi-setup-plugin-dir] )) || builtin source ${ZI[BIN_DIR]}/lib/zsh/install.zsh
 
   match=()
   local dlpage=${__url%(#b)([^+])++*}
@@ -156,10 +156,10 @@
     selected=${selected#[\"\']}
 
     if [[ -z $selected ]] {
-      +zi-message "{annex}readurl-annex{ehi}:{rst}{error}" \
-      "Couldn't match the URL${${(M)cur_paturl:#$pattern_url0}:+-0} at the download page" \
+      +zi-message "{annex}readurl-annex{ehi}:{rst}" \
+      "couldn't match the URL${${(M)cur_paturl:#$pattern_url0}:+-0} at the download page" \
       "(which is {url}${dlpage//\%/%%}{rst}${${__id_as:#$__url}:+; the snippet is being identified as" \
-      "{meta}${__id_as}{rst}; was matching {data2}${cur_paturl}{rst})"
+"[meta]${__id_as}[rst]%b}; was matching {data2}${cur_paturl}{rst}%b)."
       return 9
     }
 

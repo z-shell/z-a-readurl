@@ -145,7 +145,7 @@
       }
     }
     local -a list
-    list=( ${(@f)"$(noglob command egrep -io "href=.?$cur_paturl" $tmpfile)"} )
+    list=( ${(@f)"$(noglob command grep -E -io "href=.?$cur_paturl" $tmpfile)"} )
     if (( sorts[index] )) {
       list=( ${list[@]:#[^[:digit:]]##} )
       list=( ${(On)list[@]} )

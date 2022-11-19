@@ -7,12 +7,10 @@ dependencies 📦:
   - "pnpm-lock.yaml"
   - "yarn.lock"
 enhancement ✨:
-  - "functions/**"
+  - "functions/.*"
   - "src/**"
   - "lib/**"
 maintenance 📈:
-  - ".all-contributorsrc"
-  - ".deepsource.toml"
   - ".editorconfig"
   - ".gitattributes"
   - ".gitignore"

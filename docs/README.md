@@ -7,7 +7,7 @@
 <h2 align="center">
   <p> An annex delivers the capability to automatically download the newest version of a file to which URL is hosted on a webpage </p>
 </h2>
- <!-- <p><img align="center" src="https://github.com/z-shell/z-a-submods/raw/main/docs/images/screenshot.png" alt="zi annex submods" width="100%" height="auto" ></p> -->
+<!-- <p><img align="center" src="https://github.com/z-shell/z-a-submods/raw/main/docs/images/screenshot.png" alt="zi annex submods" width="100%" height="auto" ></p> -->
 </td></tr></table><hr />
 
 ## 💡 Wiki: [readurl](https://wiki.zshell.dev/ecosystem/annexes/readurl) - [annexes](https://wiki.zshell.dev/ecosystem/-annexes)

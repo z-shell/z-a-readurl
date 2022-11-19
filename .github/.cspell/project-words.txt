@@ -1,0 +1,7 @@
+autoload
+mbegin
+MBEGIN
+mktemp
+preinit
+readurl
+setopt

@@ -1,0 +1,10 @@
+alnum
+dlink
+dlpage
+Gniazdowski
+htmls
+jhtml
+jspx
+paturl
+rhtml
+rsvd

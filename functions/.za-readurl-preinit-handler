@@ -4,7 +4,7 @@
 # Copyright (c) 2019-2020 Sebastian Gniazdowski
 # Copyright (c) 2021-present Z-Shell Community
 
-builtin emulate -L zsh ${=${options[xtrace]:#off}:+-o xtrace}
+builtin emulate -LR zsh ${=${options[xtrace]:#off}:+-o xtrace}
 builtin setopt extended_glob warn_create_global typeset_silent no_short_loops rc_quotes no_auto_pushd
 
 if [[ $ICE[as] != (readurl*|*readurl) && $ICE[.readurl] != (readurl*|*readurl) ]]; then
@@ -41,11 +41,10 @@ if [[ -d $__dir && $__subtype != update(|:*) ]] {
   return 0
 }
 
-local -a match mbegin mend
-local MATCH
-integer MBEGIN MEND
+local MATCH REPLY; integer MBEGIN MEND
+local -a match mbegin mend reply
 
-(( $+functions[.zi-setup-plugin-dir] )) || builtin source ${ZI[BIN_DIR]}/lib/zsh/install.zsh
+(( $+functions[.zi-setup-plugin-dir] )) || builtin source "${ZI[BIN_DIR]}/lib/zsh/install.zsh"
 
 match=()
 local dlpage=${__url%(#b)([^+])++*}
@@ -126,8 +125,8 @@ filters=( "${filters[@]//(#b)(${(~kj.|.)map})/$map[$match[1]]}" )
 
 local tmpfile="$(mktemp)"
 
-pattern_url=${pattern_url//\%VERSION\%/[.,a-zA-Z0-9_-]+}
-local pattern_url0=${pattern_url0//\%VERSION\%/[.,a-zA-Z0-9_-]+}
+pattern_url="${pattern_url//\%VERSION\%/[.,a-zA-Z0-9_-]+}"
+local pattern_url0="${pattern_url0//\%VERSION\%/[.,a-zA-Z0-9_-]+}"
 
 integer index
 local cur_paturl
@@ -154,9 +153,9 @@ for cur_paturl ( $pattern_url0 $pattern_url ) {
 
   if [[ -z $selected ]] {
     +zi-message "{annex}readurl-annex{ehi}:{rst}" \
-    "couldn't match the URL${${(M)cur_paturl:#$pattern_url0}:+-0} at the download page" \
-    "(which is {url}${dlpage//\%/%%}{rst}${${__id_as:#$__url}:+; the snippet is being identified as" \
-"[meta]${__id_as}[rst]%b}; was matching {data2}${cur_paturl}{rst}%b)."
+    "couldn't match the URL${${(M)cur_paturl:#$pattern_url0}:+-0} at the download page{ehi}:{rst}{nl}" \
+    "{mmdsh}{rst} {url}${dlpage//\%/%%}{rst}${${__id_as:#$__url}:+ the snippet is being identified as " \
+    "${ZI[col-pname]}${__id_as}${ZI[col-rst]}} was matching{ehi}:{rst}{nl} {mmdsh}{rst} {data2}${cur_paturl}{rst}"
     return 9
   }
 
@@ -208,4 +207,5 @@ if [[ $__subtype == update(|:*) ]]; then
 fi
 
 +zi-message "{annex}readurl-annex{ehi}:{rst} {msg}Matched the following URL: {url}${new_url}{rst}"
+
 return 0

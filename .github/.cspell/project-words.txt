@@ -2,6 +2,7 @@ autoload
 mbegin
 MBEGIN
 mktemp
+pname
 preinit
 readurl
 setopt
